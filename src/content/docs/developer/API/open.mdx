@@ -9,9 +9,9 @@ import { open } from "@kksh/api/ui/worker"
 // or
 import { open } from "@kksh/api/ui/iframe"
 
-open.openUrl("https://kunkun.sh") // open url in default app
-open.openFolder("/Users/kksh/Downloads/") // open folder
-open.openFile("/Users/kksh/Downloads/schema.mp4") // open file in default app
+open.url("https://kunkun.sh") // open url in default app
+open.folder("/Users/kksh/Downloads/") // open folder
+open.file("/Users/kksh/Downloads/schema.mp4") // open file in default app
 ```
 
 ## Permissions
@@ -21,11 +21,11 @@ Open API may potentially be used to open malicious URLs or files.
 To prevent this, detailed permissions must be declared in the manifest file.
 Only URLs and file paths matching the declared patterns will be allowed.
 
-- `openUrl`: `'open:url'` permission is required to use this API.
-- `openFolder`: `open:folder` permission is required to use this API.
-- `openFile`: `open:file` permission is required to use this API.
+- `url`: `'open:url'` permission is required to use this API.
+- `folder`: `open:folder` permission is required to use this API.
+- `file`: `open:file` permission is required to use this API.
 
-### `openUrl`
+### `url`
 
 ```json
 "permissions": [
@@ -51,7 +51,7 @@ Only URLs and file paths matching the declared patterns will be allowed.
 
 To allow any https URL, use `https://**`.
 
-### `openFolder`
+### `folder`
 
 The following permissions means
 
@@ -82,7 +82,7 @@ The following permissions means
 }
 ```
 
-### `openFile`
+### `file`
 
 Similar to `openFolder`, but only allow to open files.
 
