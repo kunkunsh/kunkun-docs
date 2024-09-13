@@ -8,8 +8,7 @@ const { permissionMap, apiPrefixLength } = Astro.props as {permissionMap: Record
 			<li>
 				<code class="">{
 				apiPrefixLength !== undefined ? transformMethodName(methodName, apiPrefixLength)
-				: methodName}
-				</code>:
+				: methodName}</code>:
 				<span class="gap-1">
 					[
 					{permissions.map((p) => (

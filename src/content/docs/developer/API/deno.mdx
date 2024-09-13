@@ -1,15 +1,145 @@
 ---
 title: Deno
-sidebar:
-  badge:
-    text: WIP
-    variant: caution
+tableOfContents:
+  maxHeadingLevel: 6
 ---
 
-:::caution
-This API is still work in progress.
+> Deno provides an API to run JavaScript/TypeScript in non-browser environment with more access to system resources, 
+> but still within a sandbox.
+
+:::tip
+Deno API is part of the shell API and works similarly, you may want to read [shell API](/developer/api/shell) first.
 :::
 
-> Deno API is provided to run TypeScript code in a sandboxed environment.
+## API and Permissions
 
 All [Deno permissions](https://docs.deno.com/runtime/fundamentals/security/) must be explicitly declared in `package.json`.
+
+`DenoCommand` works similarly to a regular [shell Command](/developer/api/shell#command). It can be created with `shell.createDenoCommand`.
+
+The returned `DenoCommand` object has `execute` and `spawn` methods.
+
+To run a Deno command, you need the following scoped permissions:
+
+- `shell:deno:execute`
+- `shell:deno:spawn`
+
+## Sample Code
+
+### Transform Image with Sharp
+
+In this sample, we will transform an image with [sharp](https://sharp.pixelplumbing.com/), which is not runnable in browser.
+
+Suppose we have a template worker extension project with the following structure:
+
+import { FileTree } from '@astrojs/starlight/components';
+
+<FileTree>
+- src
+  - deno-script.ts
+  - index.ts
+- ...
+</FileTree>
+
+`index.ts` is the entrypoint to the extension command, `deno-script.ts` is a script that will be executed by Deno.
+
+```ts title="deno-script.ts"
+import { parseArgs } from "jsr:@std/cli/parse-args"
+import sharp from "npm:sharp"
+
+const args = parseArgs(Deno.args)
+console.log(args)
+
+const input = args.i
+const output = args.o
+
+sharp(input).blur(10).resize(300, 300).toFile(output)
+```
+
+The deno script above is very simple, it takes in an input image path and output image path, 
+then apply blur and resize and save to output path.
+
+To run this sample directly with `deno`: 
+```bash
+deno run --allow-ffi \
+  --allow-env=npm_package_config_libvips,CWD \
+  --allow-read=/Users/user/Desktop/avatar.png src/deno-script.ts \
+  -i ~/Desktop/avatar.png -o ~/Desktop/avatar.jpeg
+```
+
+In the command above, we need to grant fine-grained permissions to Deno. It's not a good idea to run Deno with all permissions.
+
+In the following sample code, we will use `shell.createDenoCommand` to create a Deno command with permission settings.
+
+
+```ts title="index.ts"
+import { shell, path, WorkerExtension } from "@kksh/api/ui/worker"
+
+class ExtensionTemplate extends WorkerExtension {
+	async load() {
+    const denoCmd = shell.createDenoCommand(
+      "$EXTENSION/src/deno-script.ts", 
+      ["-i=./avatar.png", "-o=./avatar-blur.jpeg"], 
+      {
+        allowEnv: ["npm_package_config_libvips", "CWD"],
+        allowRead: ["$DESKTOP"],
+        allowAllFfi: true,
+        cwd: await path.desktopDir()
+      }
+    )
+    const denoRes = await denoCmd.execute()
+    console.log("stdout", denoRes.stdout)
+  }
+}
+```
+
+The above TypeScript code sets CWD to the desktop directory, but you don't have to. You can always just compute the absolute path for the input and output file.
+
+`$EXTENSION` was used to refer to the directory of the extension. It will be translated to the real path of your extension root at runtime.
+
+`$DESKTOP` is also a path alias that will be translated to the real path of your desktop at runtime. 
+You can find other path aliases in [file system API](/developer/api/fs#path-alias).
+
+#### Permissions in package.json
+
+To ensure that an extension operates within a restricted scope, it must declare the necessary permissions in the `package.json` file. 
+This step prevents the extension from executing any code beyond the predefined limits.
+
+
+```ts title="package.json"
+...
+"permissions": [
+  {
+    "permission": "shell:deno:execute",
+    "allow": [
+      {
+        "path": "$EXTENSION/src/deno-script.ts",
+        "env": ["npm_package_config_libvips", "CWD"],
+        "ffi": "*",
+        "read": ["$DESKTOP"]
+      }
+    ]
+  },
+  ...
+]
+...
+```
+
+
+`path` is the path to the deno script to execute.
+
+The rest of the permissions are from [Deno permissions](https://docs.deno.com/runtime/fundamentals/security/).
+
+- `net`
+- `env`
+- `read`
+- `write`
+- `run`
+- `ffi`
+- `sys`
+
+They are `string[]` or `"*"`, when set to `"*"`, it allows all.
+
+For example, setting `"read": "*"` allows setting `allowAllRead` to true in `shell.createDenoCommand`, and will be translated to `--allow-read` in the code execution.
+
+Setting `"read": ["$DESKTOP"]` allows you to set `allowRead: ["$DESKTOP"]` in `shell.createDenoCommand`, and will be translated to `--allow-read=/Users/user/Desktop` in the code execution.

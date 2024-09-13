@@ -32,7 +32,11 @@ import ShellAPI from '@/components/api/shell.astro'
 
 <ShellAPI />
 
-## `Command` Object
+:::tip
+Deno API is also part of the shell API, it's moved to a separate page: [Deno API](/developer/api/deno/)
+:::
+
+## Command
 
 ### Execute Command
 
@@ -41,7 +45,7 @@ import { shell } from "@kksh/api/ui/worker"
 // or
 import { shell } from "@kksh/api/ui/iframe"
 
-const cmd = shell.Command.create("echo", ["Hello World"])
+const cmd = shell.createCommand("echo", ["Hello World"])
 const output = await cmd.execute()
 console.log(output.stdout) // Hello World
 ```
@@ -109,7 +113,7 @@ For example, this could be useful if you are converting a video file with `ffmpe
 Here is a simplified example of how to use the `spawn` API.
 
 ```ts
-const cmd = shell.Command.create("echo", ["Hello World"])
+const cmd = shell.createCommand("echo", ["Hello World"])
 let stdout = ""
 let stderr = ""
 cmd.on("close", (data) => {
@@ -310,7 +314,7 @@ function execute(
   });
 }
 
-const command = shell.Command.create("ffprobe", [
+const command = shell.createCommand("ffprobe", [
   "-v",
   "quiet",
   "-print_format",
