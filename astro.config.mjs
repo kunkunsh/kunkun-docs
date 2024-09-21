@@ -18,7 +18,7 @@ export default defineConfig({
 			},
 			social: {
 				github: "https://github.com/HuakunTech/kunkun",
-				discord: "https://discord.gg/bvf6GwxKWX"
+				discord: "https://discord.gg/7dzw3TYeTU"
 			},
 			components: {
 				// ThemeSelect: "./src/components/overrides/ThemeSelect.astro", // no longer needed, imported in Header.astro

@@ -69,8 +69,11 @@ deno run --allow-ffi \
 
 In the command above, we need to grant fine-grained permissions to Deno. It's not a good idea to run Deno with all permissions.
 
+#### Use Deno API
+
 In the following sample code, we will use `shell.createDenoCommand` to create a Deno command with permission settings.
 
+See https://docs.api.kunkun.sh/interfaces/ui.DenoRunConfig for options you can pass to `shell.createDenoCommand`.
 
 ```ts title="index.ts"
 import { shell, path, WorkerExtension } from "@kksh/api/ui/worker"
