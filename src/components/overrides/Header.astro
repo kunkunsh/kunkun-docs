@@ -4,9 +4,10 @@ import LanguageSelect from '@astrojs/starlight/components/LanguageSelect.astro';
 import Search from '@astrojs/starlight/components/Search.astro';
 import SiteTitle from './SiteTitle.astro';
 import SocialIcons from '@astrojs/starlight/components/SocialIcons.astro';
-import ThemeSelect from './ThemeSelect.astro';
+// import ThemeSelect from './ThemeSelect.astro';
 import VtbotStarlight from 'astro-vtbot/components/starlight/Base.astro';
-// import ThemeSelect from '@astrojs/starlight/components/ThemeSelect.astro';
+import ThemeObserve from './ThemeObserve.astro'
+import ThemeSelect from '@astrojs/starlight/components/ThemeSelect.astro';
 import PostHog from "../analytics/posthog.astro";
 import GoogleAnalytics from '../analytics/google-analytics.astro';
 import SyncThemeVue from '@/components/theme/sync-theme.vue'
@@ -54,6 +55,7 @@ syncThemeClass()
 	<PostHog />
 	<GoogleAnalytics />
 </head>
+<ThemeObserve />
 <!-- <SyncThemeVue client:only="vue" /> -->
 <!-- <VtbotStarlight {...Astro.props} transition:animate="fade"> -->
 	<div class="header sl-flex">
