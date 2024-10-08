@@ -25,6 +25,12 @@ Read the [extensions section](/extensions/worker-template) first to learn more a
 
 `ui` API provides the following methods:
 
+- `showLoadingBar`
+  - Display a loading bar at the top of the page
+  ```ts
+  ui.showLoadingBar(true);  // show loading bar
+  ui.showLoadingBar(false); // hide loading bar
+  ```
 - `setScrollLoading`
   - Display a loading spinner when the user scrolls to the bottom of list view
 - `setSearchTerm`
