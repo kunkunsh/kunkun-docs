@@ -64,16 +64,19 @@ Here is how the library will be written in Deno. Just provide an API object to `
 All API methods must be `async` functions (return `Promise`), otherwise the return type will be wrong.
 :::
 
-```ts title="deno-src/math-lib.ts"
-import { DenoStdio, ProcessChannel } from "@hk/comlink-stdio"
-
-export interface API {
+```ts title="types.ts"
+export interface MathLibAPI {
 	add(a: number, b: number): Promise<number>
 	subtract(a: number, b: number): Promise<number>
 }
+```
+
+```ts title="deno-src/math-lib.ts"
+import { DenoStdio, ProcessChannel } from "@hk/comlink-stdio"
+import { type MathLibAPI } from "../types.ts"
 
 // Define your API methods
-export const mathLib = {
+export const mathLib: MathLibAPI = {
 	add: async (a: number, b: number) => a + b,
 	subtract: async (a: number, b: number) => a - b
 }
@@ -86,15 +89,13 @@ In extension code, use `shell.createDenoRpcAPI` to start running a Deno script a
 
 ```ts title="extension.ts"
 import { shell } from "@kksh/api/ui/worker"; // iframe version works too
+import { type MathLibAPI } from "./types.ts"
 
 // ...
 const api = await shell.createDenoRpcAPI<
   {},
-  {
-    add(a: number, b: number): Promise<number>;
-    subtract(a: number, b: number): Promise<number>;
-  }
->("$EXTENSION/deno-src/rpc.ts", [], {}, {});
+  MathLibAPI
+>("$EXTENSION/deno-src/math-lib.ts", [], {}, {});
 
 
 // 
