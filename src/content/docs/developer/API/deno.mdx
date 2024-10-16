@@ -142,7 +142,7 @@ import { type MathLibAPI } from "./types.ts"
 
 // ...
 // First generic is Local API interface to expose to the other side of the channel. We set it to {} to not expose any API. Last function parameter is the implementation of the API, which we also set to {}
-const rpcChannel = await shell.createDenoRpcChannel<
+const { rpcChannel, process } = await shell.createDenoRpcChannel<
   {},
   MathLibAPI
 >("$EXTENSION/deno-src/math-lib.ts", [], {
@@ -151,9 +151,22 @@ const rpcChannel = await shell.createDenoRpcChannel<
 
 
 const api = rpcChannel.getApi();
-api.add(1, 2).then(console.log); // 3
-api.subtract(1, 2).then(console.log); // -1
+await api.add(1, 2).then(console.log); // 3
+await api.subtract(1, 2).then(console.log); // -1
+
+await process.kill() // please always remember to kill the Deno process, or it may run forever
 ```
+
+:::danger
+Please remember to kill the process manually after you are done using the API. 
+Otherwise, the process could run in the background forever.
+
+An auto process cleanup mechanism is implemented in Kunkun to auto kill all leftover processes when an extension quits, but it's still better to control it manually.
+
+If you are using template worker extension command, you could store the process as a class instance variable, and kill it in `onBeforeGoBack()` hook.
+
+I recommend spawning a new process when you need it and kill it immediately after to avoid problems.
+:::
 
 ## Sample Code
 
