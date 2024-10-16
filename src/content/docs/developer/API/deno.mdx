@@ -29,19 +29,21 @@ Read [sample code](#sample-code) for more details.
 ### RPC Library Style API
 
 > If you're looking to run Deno as a library for resource-intensive tasks or those requiring system access, the Deno API offers a solution. You can execute Deno scripts using `shell.createDenoCommand`, passing input through `argv` and `stdin`, and retrieving results via `stdout` and `stderr`. This approach essentially treats Deno like a CLI, as illustrated in an example (Transform Image with Sharp) provided below.
-> However, using a CLI is not always ideal for those who prefer calling scripts directly like a typical library. The Kunkun API solves this by offering an abstraction in RPC style, allowing Deno scripts to be invoked as libraries rather than CLIs.
+> However, using a CLI is not always ideal for those who prefer calling scripts directly like a typical library. The `@kksh/api` solves this by offering an abstraction in RPC style, allowing Deno scripts to be invoked as libraries rather than CLIs.
 
-The shell API provides a function siganture `createDenoRpcAPI` that creates a Deno RPC API.
+The shell API provides a function siganture `createDenoRpcChannel` that creates a Deno RPC API.
 
 ```ts
-function createDenoRpcAPI<LocalAPI extends {}, RemoteAPI extends {}>(
+function createDenoRpcChannel<LocalAPI extends {}, RemoteAPI extends {}>(
   scriptPath: string,
   args: string[],
   config: Partial<DenoRunConfig> & SpawnOptions,
   localAPIImplementation: LocalAPI
-): Promise<RemoteAPI> {
+): Promise<RPCChannel<LocalAPI, RemoteAPI>>
   // ...
 }
+
+
 ```
 
 Then you can call the remote API functions directly.
@@ -54,11 +56,7 @@ Then you can call the remote API functions directly.
 
 Suppose we want to build a math library in Deno and call it from extension running in web worker or iframe.
 
-:::danger
-TODO: Update sample code here, export the functions from `@kksh/api` instead
-:::
-
-Here is how the library will be written in Deno. Just provide an API object to `ProcessChannel`. 
+Here is how the library will be written in Deno. Just provide an API object.
 
 :::caution
 All API methods must be `async` functions (return `Promise`), otherwise the return type will be wrong.
@@ -71,8 +69,55 @@ export interface MathLibAPI {
 }
 ```
 
+#### Deno Script
+
+I recommend use a separate subdirectory for Deno scripts to avoid confusion with regular extension code. I will use `deno-src` in this example.
+
+```bash
+deno init deno-src
+deno add jsr:@kunkun/api
+```
+
+This will create a import map in `deno.json`
+
+```json title="deno-src/deno.json"
+{
+	"imports": {
+		"@kunkun/api": "jsr:@kunkun/api@^x.x.x" // Use the latest version
+	}
+}
+```
+
+Kunkun's API package for Deno is on JSR, https://jsr.io/@kunkun/api
+Note: the scope is `@kunkun` rather than `@kksh`. This is because `@kunkun` scope was taken on npm registry. 
+
+`expose` function is provided by `@kunkun/api/runtime/deno` to expose the API object to its parent process.
+
 ```ts title="deno-src/math-lib.ts"
-import { DenoStdio, ProcessChannel } from "@hk/comlink-stdio"
+import { expose } from '@kunkun/api/runtime/deno'
+import { type MathLibAPI } from "../types.ts"
+
+// Define your API methods
+export const mathLib: MathLibAPI = {
+	add: async (a: number, b: number) => a + b,
+	subtract: async (a: number, b: number) => a - b
+}
+
+expose(apiMethods)
+```
+
+`expose()` is a wrapper function for building a bidirectional RPC channel. It returns the `RPCChannel` object, 
+which can be used to call API exposed from the other side of the channel.
+
+<details>
+<summary>Manual Channel Configuration</summary>
+
+You shouldn't need to worry about how the channel is created, but here is how it's done manually.
+
+It's based on `@hk/comlink-stdio` package, see https://jsr.io/@hk/comlink-stdio
+
+```ts title="deno-src/math-lib.ts"
+import { DenoStdio, RPCChannel } from "@hk/comlink-stdio"
 import { type MathLibAPI } from "../types.ts"
 
 // Define your API methods
@@ -82,30 +127,33 @@ export const mathLib: MathLibAPI = {
 }
 
 const stdio = new DenoStdio(Deno.stdin.readable, Deno.stdout.writable)
-const child = new ProcessChannel(stdio, mathLib)
+const channel = new RPCChannel<MathLibAPI, {}>(stdio, mathLib)
+const api = channel.getApi()
 ```
+</details>
 
-In extension code, use `shell.createDenoRpcAPI` to start running a Deno script and get the API object.
+#### Extension Code
+
+In main extension code, use `shell.createDenoRpcChannel` to start running a Deno script and get the API object.
 
 ```ts title="extension.ts"
 import { shell } from "@kksh/api/ui/worker"; // iframe version works too
 import { type MathLibAPI } from "./types.ts"
 
 // ...
-const api = await shell.createDenoRpcAPI<
+// First generic is Local API interface to expose to the other side of the channel. We set it to {} to not expose any API. Last function parameter is the implementation of the API, which we also set to {}
+const rpcChannel = await shell.createDenoRpcChannel<
   {},
   MathLibAPI
->("$EXTENSION/deno-src/math-lib.ts", [], {}, {});
+>("$EXTENSION/deno-src/math-lib.ts", [], {
+  allowRead: ["$DESKTOP/**"]
+}, {});
 
 
-// 
+const api = rpcChannel.getApi();
 api.add(1, 2).then(console.log); // 3
 api.subtract(1, 2).then(console.log); // -1
 ```
-
-
-
-
 
 ## Sample Code
 
