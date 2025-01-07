@@ -1,0 +1,86 @@
+---
+title: Headless Command
+sidebar:
+  order: 3
+tableOfContents:
+  maxHeadingLevel: 6
+---
+
+The headless command is simply a [Template UI Command](/extensions/worker-template) without UI.
+
+Use APIs exported from `"@kksh/api/headless"`.
+
+Some APIs for rendering UI are removed in `"@kksh/api/headless"`.
+
+It's useful for some simple tasks without needing to open a new page.
+
+Run the project scaffolding command to create a new project with Worker Template Extension.
+
+:::note
+Currently, the headless command is just a simplified version of the [Template UI Command](/extensions/worker-template) by removing UI.
+In the future, more features will be added to the headless command. Such as cron jobs, etc.
+:::
+
+```bash
+npm init kunkun@latest  # choose the template
+```
+
+## `package.json`
+
+```json
+{
+    ...,
+    "kunkun": {
+        ...
+		"identifier": "template-ext-headless",
+		"permissions": [
+			"clipboard:write-text"
+		],
+		"icon": {
+			"type": "iconify",
+			"value": "material-symbols:extensiontabler:code"
+		},
+		"headlessCmds": [
+			{
+				"name": "Template: Headless Command UUID",
+				"main": "dist/index.js",
+				"cmds": []
+			}
+		]
+	},
+    ...
+}
+```
+
+## Sample UUID Extension
+
+This simple extension simply generates a UUID v4 and copies it to the clipboard.
+Thus why `"clipboard:write-text"` permission is required in `package.json`.
+
+`HeadlessWorkerExtension` is the base class for headless commands.
+
+```ts
+import {
+  clipboard,
+  expose,
+  HeadlessWorkerExtension,
+  toast,
+} from "@kksh/api/headless";
+import { v4 as uuidv4 } from "uuid";
+
+class UuidExt extends HeadlessWorkerExtension {
+  async load() {
+    const uuid = uuidv4();
+    return clipboard
+      .writeText(uuid)
+      .then(() => {
+        toast.success(`Copied UUID: ${uuid}`);
+      })
+      .catch((err) => {
+        toast.error(`Failed to copy UUID: ${err}`);
+      });
+  }
+}
+
+expose(new UuidExt());
+```

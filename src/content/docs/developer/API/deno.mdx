@@ -1,0 +1,290 @@
+---
+title: Deno
+tableOfContents:
+  maxHeadingLevel: 6
+---
+
+> Deno provides an API to run JavaScript/TypeScript in non-browser environment with more access to system resources,
+> but still within a sandbox.
+
+:::tip
+Deno API is part of the shell API and works similarly but provides a easier abstraction, you may want to read [shell API](/developer/api/shell) first.
+:::
+
+## API and Permissions
+
+All [Deno permissions](https://docs.deno.com/runtime/fundamentals/security/) must be explicitly declared in `package.json`.
+
+`DenoCommand` works similarly to a regular [shell Command](/developer/api/shell#command). It can be created with `shell.createDenoCommand`.
+
+The returned `DenoCommand` object has `execute` and `spawn` methods (just like regular `Command`).
+
+To run a Deno command, you need one of the the following scoped permissions:
+
+- `shell:deno:execute`
+- `shell:deno:spawn`
+
+Read [sample code](#sample-code) for more details.
+
+### RPC Library Style API
+
+> If you're looking to run Deno as a library for resource-intensive tasks or those requiring system access, the Deno API offers a solution. You can execute Deno scripts using `shell.createDenoCommand`, passing input through `argv` and `stdin`, and retrieving results via `stdout` and `stderr`. This approach essentially treats Deno like a CLI, as illustrated in an example (Transform Image with Sharp) provided below.
+> However, using a CLI is not always ideal for those who prefer calling scripts directly like a typical library. The `@kksh/api` solves this by offering an abstraction in RPC style, allowing Deno scripts to be invoked as libraries rather than CLIs.
+
+The shell API provides a function siganture `createDenoRpcChannel` that creates a Deno RPC API.
+
+```ts
+function createDenoRpcChannel<LocalAPI extends {}, RemoteAPI extends {}>(
+  scriptPath: string,
+  args: string[],
+  config: Partial<DenoRunConfig> & SpawnOptions,
+  localAPIImplementation: LocalAPI
+): Promise<RPCChannel<LocalAPI, RemoteAPI>>
+  // ...
+}
+
+
+```
+
+Then you can call the remote API functions directly.
+
+- Since this is a bidirectional IPC channel, you can pass `LocalAPI` and `RemoteAPI` generics to define the API.
+  - `LocalAPI` is what you want to expose to the other side of the channel, and `RemoteAPI` is what you want to call from the other side.
+- `args` are `argv` like regular commands
+- `config` is the same as config in `shell.createDenoCommand`, used for configuring deno permissions and other options.
+- `localAPIImplementation` is the implementation of the API you want to expose, pass `{}` if you don't want to expose any API.
+
+Suppose we want to build a math library in Deno and call it from extension running in web worker or iframe.
+
+Here is how the library will be written in Deno. Just provide an API object.
+
+:::caution
+All API methods must be `async` functions (return `Promise`), otherwise the return type will be wrong.
+:::
+
+```ts title="types.ts"
+export interface MathLibAPI {
+	add(a: number, b: number): Promise<number>
+	subtract(a: number, b: number): Promise<number>
+}
+```
+
+#### Deno Script
+
+I recommend use a separate subdirectory for Deno scripts to avoid confusion with regular extension code. I will use `deno-src` in this example.
+
+```bash
+deno init deno-src
+deno add jsr:@kunkun/api
+```
+
+This will create a import map in `deno.json`
+
+```json title="deno-src/deno.json"
+{
+	"imports": {
+		"@kunkun/api": "jsr:@kunkun/api@^x.x.x" // Use the latest version
+	}
+}
+```
+
+Kunkun's API package for Deno is on JSR, https://jsr.io/@kunkun/api
+Note: the scope is `@kunkun` rather than `@kksh`. This is because `@kunkun` scope was taken on npm registry. 
+
+`expose` function is provided by `@kunkun/api/runtime/deno` to expose the API object to its parent process.
+
+```ts title="deno-src/math-lib.ts"
+import { expose } from '@kunkun/api/runtime/deno'
+import { type MathLibAPI } from "../types.ts"
+
+// Define your API methods
+export const mathLib: MathLibAPI = {
+	add: async (a: number, b: number) => a + b,
+	subtract: async (a: number, b: number) => a - b
+}
+
+expose(apiMethods)
+```
+
+`expose()` is a wrapper function for building a bidirectional RPC channel. It returns the `RPCChannel` object, 
+which can be used to call API exposed from the other side of the channel.
+
+<details>
+<summary>Manual Channel Configuration</summary>
+
+You shouldn't need to worry about how the channel is created, but here is how it's done manually.
+
+It's based on `@hk/comlink-stdio` package, see https://jsr.io/@hk/comlink-stdio
+
+```ts title="deno-src/math-lib.ts"
+import { DenoStdio, RPCChannel } from "@hk/comlink-stdio"
+import { type MathLibAPI } from "../types.ts"
+
+// Define your API methods
+export const mathLib: MathLibAPI = {
+	add: async (a: number, b: number) => a + b,
+	subtract: async (a: number, b: number) => a - b
+}
+
+const stdio = new DenoStdio(Deno.stdin.readable, Deno.stdout.writable)
+const channel = new RPCChannel<MathLibAPI, {}>(stdio, mathLib)
+const api = channel.getApi()
+```
+</details>
+
+#### Extension Code
+
+In main extension code, use `shell.createDenoRpcChannel` to start running a Deno script and get the API object.
+
+```ts title="extension.ts"
+import { shell } from "@kksh/api/ui/worker"; // iframe version works too
+import { type MathLibAPI } from "./types.ts"
+
+// ...
+// First generic is Local API interface to expose to the other side of the channel. We set it to {} to not expose any API. Last function parameter is the implementation of the API, which we also set to {}
+const { rpcChannel, process } = await shell.createDenoRpcChannel<
+  {},
+  MathLibAPI
+>("$EXTENSION/deno-src/math-lib.ts", [], {
+  allowRead: ["$DESKTOP/**"]
+}, {});
+
+
+const api = rpcChannel.getApi();
+await api.add(1, 2).then(console.log); // 3
+await api.subtract(1, 2).then(console.log); // -1
+
+await process.kill() // please always remember to kill the Deno process, or it may run forever
+```
+
+:::danger
+Please remember to kill the process manually after you are done using the API. 
+Otherwise, the process could run in the background forever.
+
+An auto process cleanup mechanism is implemented in Kunkun to auto kill all leftover processes when an extension quits, but it's still better to control it manually.
+
+If you are using template worker extension command, you could store the process as a class instance variable, and kill it in `onBeforeGoBack()` hook.
+
+I recommend spawning a new process when you need it and kill it immediately after to avoid problems.
+:::
+
+## Sample Code
+
+### Transform Image with Sharp
+
+In this sample, we will transform an image with [sharp](https://sharp.pixelplumbing.com/), which is not runnable in browser.
+
+Suppose we have a template worker extension project with the following structure:
+
+import { FileTree } from '@astrojs/starlight/components';
+
+<FileTree>
+- src
+  - deno-script.ts
+  - index.ts
+- ...
+</FileTree>
+
+`index.ts` is the entrypoint to the extension command, `deno-script.ts` is a script that will be executed by Deno.
+
+```ts title="deno-script.ts"
+import { parseArgs } from "jsr:@std/cli/parse-args"
+import sharp from "npm:sharp"
+
+const args = parseArgs(Deno.args)
+console.log(args)
+
+const input = args.i
+const output = args.o
+
+sharp(input).blur(10).resize(300, 300).toFile(output)
+```
+
+The deno script above is very simple, it takes in an input image path and output image path, 
+then apply blur and resize and save to output path.
+
+To run this sample directly with `deno`: 
+```bash
+deno run --allow-ffi \
+  --allow-env=npm_package_config_libvips,CWD \
+  --allow-read=/Users/user/Desktop/avatar.png src/deno-script.ts \
+  -i ~/Desktop/avatar.png -o ~/Desktop/avatar.jpeg
+```
+
+In the command above, we need to grant fine-grained permissions to Deno. It's not a good idea to run Deno with all permissions.
+
+#### Use Deno API
+
+In the following sample code, we will use `shell.createDenoCommand` to create a Deno command with permission settings.
+
+See https://docs.api.kunkun.sh/interfaces/index.DenoRunConfig for options you can pass to `shell.createDenoCommand`.
+
+```ts title="index.ts"
+import { shell, path, WorkerExtension } from "@kksh/api/ui/worker";
+
+class ExtensionTemplate extends WorkerExtension {
+  async load() {
+    const denoCmd = shell.createDenoCommand(
+      "$EXTENSION/src/deno-script.ts",
+      ["-i=./avatar.png", "-o=./avatar-blur.jpeg"],
+      {
+        allowEnv: ["npm_package_config_libvips", "CWD"],
+        allowRead: ["$DESKTOP"],
+        allowAllFfi: true,
+        cwd: await path.desktopDir(),
+      }
+    );
+    const denoRes = await denoCmd.execute();
+    console.log("stdout", denoRes.stdout);
+  }
+}
+```
+
+The above TypeScript code sets CWD to the desktop directory, but you don't have to. You can always just compute the absolute path for the input and output file.
+
+`$EXTENSION` was used to refer to the directory of the extension. It will be translated to the real path of your extension root at runtime.
+
+`$DESKTOP` is also a path alias that will be translated to the real path of your desktop at runtime.
+You can find other path aliases in [file system API](/developer/api/fs#path-alias).
+
+#### Permissions in package.json
+
+To ensure that an extension operates within a restricted scope, it must declare the necessary permissions in the `package.json` file.
+This step prevents the extension from executing any code beyond the predefined limits.
+
+```ts title="package.json"
+...
+"permissions": [
+  {
+    "permission": "shell:deno:execute",
+    "allow": [
+      {
+        "path": "$EXTENSION/src/deno-script.ts",
+        "env": ["npm_package_config_libvips", "CWD"],
+        "ffi": "*",
+        "read": ["$DESKTOP"]
+      }
+    ]
+  },
+  ...
+]
+...
+```
+
+`path` is the path to the deno script to execute.
+
+The rest of the permissions are from [Deno permissions](https://docs.deno.com/runtime/fundamentals/security/).
+
+- `net`
+- `env`
+- `read`
+- `write`
+- `run`
+- `ffi`
+- `sys`
+
+They are `string[]` or `"*"`, when set to `"*"`, it allows all.
+
+For example, setting `"read": "*"` allows setting `allowAllRead` to true in `shell.createDenoCommand`, and will be translated to `--allow-read` in the code execution.
+
+Setting `"read": ["$DESKTOP"]` allows you to set `allowRead: ["$DESKTOP"]` in `shell.createDenoCommand`, and will be translated to `--allow-read=/Users/user/Desktop` in the code execution.

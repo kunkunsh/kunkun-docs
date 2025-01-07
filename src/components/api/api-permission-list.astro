@@ -1,0 +1,22 @@
+---
+import { transformMethodName } from "./utils"
+const { permissionMap, apiPrefixLength } = Astro.props as {permissionMap: Record<string, string[]>, apiPrefixLength: number | undefined};
+---
+<ul>
+	{
+		Object.entries(permissionMap).map(([methodName, permissions]) => (
+			<li>
+				<code class="">{
+				apiPrefixLength !== undefined ? transformMethodName(methodName, apiPrefixLength)
+				: methodName}</code>:
+				<span class="gap-1">
+					[
+					{permissions.map((p, idx) => (
+						<code>{p}</code><span>{idx === permissions.length - 1 ? "" : ","}</span>
+					))}
+					]
+				</span>
+			</li>
+		))
+	}
+</ul>

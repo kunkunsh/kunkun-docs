@@ -1,0 +1,21 @@
+---
+title: App
+---
+
+> This API provides information about the application
+
+**Docs:**: https://docs.api.kunkun.sh/interfaces/index.IApp
+
+## API
+
+- `language()`: Get the language preference
+
+```ts
+import { app } from "@kksh/api/ui/worker";
+// or
+import { app } from "@kksh/api/ui/iframe";
+
+app.language().then((lang) => {
+  console.log("Language:", lang);
+});
+```

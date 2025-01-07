@@ -1,0 +1,41 @@
+---
+title: KV
+---
+
+**Docs:** https://docs.api.kunkun.sh/interfaces/index.IKV
+
+KV API is a persistent key-value store for extensions similar to `localStorage`.
+
+Please avoid using browser storage like `localStorage` to avoid data collisions with other extensions and data leaks.
+
+**KV API doesn't require any permissions, but one extension can only access its own data.**
+
+:::tip
+FYI: The KV API is just a wrapper over the [Database API](/developer/api/db), which is built on top of sqlite.
+The `dataType` field is `kunkun_kv`, so if you want to access KV store data using the Database API, you can set `dataType` to `kunkun_kv` in search query.
+:::
+
+The following APIs are now available:
+
+- `add`
+- `get`
+- `exists`
+- `delete`
+
+## Sample Code
+
+```ts
+kv.exists("test").then((exists) => {
+  console.log("KV exists:", exists);
+});
+kv.set("test", Math.random().toString()).then(() =>
+  kv.get("test").then((value) => {
+    console.log("KV value:", value);
+  });
+);
+```
+
+:::caution
+The data is stored as JSON string in database, so data passed to `set` must be serializable with `JSON.stringify`.
+It doesn't have to be a string, but it will be converted to string when stored, and `JSON.parse` will be called when retrieved.
+:::

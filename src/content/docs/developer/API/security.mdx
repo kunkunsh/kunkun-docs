@@ -1,0 +1,57 @@
+---
+title: Security
+---
+
+**Docs:** https://docs.api.kunkun.sh/interfaces/index.ISecurity
+
+This API provides some security and privacy utility functions.
+
+Extensions inherit system permissions from the host app (Kunkun)
+Some features may require access to sensitive permissions, while Kunkun may not have access to them.
+
+With security API, you can check if certain permissions are granted to Kunkun and reveal the security pane to let user grant them.
+
+For example, on MacOS, if your extension needs to take screenshots or record screen, user has to grant screen capture permission to Kunkun.
+Otherwise, the content captured will be empty. 
+
+A `verifyFingerprint()` API is also provided to verify the fingerprint of the current user. If your extension stores any sensitive data, 
+you may want to verify the fingerprint to ensure the user is the one who is using the extension.
+
+## Platforms
+
+:::caution
+MacOS has more security limitations that could affect the usage of extensions, currently this security API is only for MacOS.
+:::
+
+- [x] MacOS
+- [ ] Windows
+- [ ] Linux
+
+## API and Permissions
+
+import SecurityApiList from "@/components/api/security-api-list.astro"
+
+<SecurityApiList />
+
+## Usage
+
+Here is a simple demo to ask user for screen capture permission and reveal the security pane.
+
+```ts
+import { security } from "@kksh/api/ui/worker";
+// or
+import { security } from "@kksh/api/ui/iframe";
+
+const verified = await security.mac.verifyFingerprint()
+const hasPermission = await security.mac.checkScreenCapturePermission()
+if (hasPermission) {
+    const granted = await security.mac.requestScreenCapturePermission()
+    // or
+    await security.mac.revealSecurityPane("ScreenCapture")
+}
+
+// Sometimes, if user denies a permission, the prompt won't show up the next time. 
+// You can reveal the security pane.
+// If you still want the prompt to show up, you may want to reset the permission.
+await security.mac.resetPermission("ScreenCapture")
+```

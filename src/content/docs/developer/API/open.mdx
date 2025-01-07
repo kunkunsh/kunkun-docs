@@ -1,0 +1,115 @@
+---
+title: Open
+---
+
+**Docs:** https://docs.api.kunkun.sh/interfaces/index.IOpen
+
+```ts
+import { open } from "@kksh/api/ui/worker"
+// or
+import { open } from "@kksh/api/ui/iframe"
+
+open.url("https://kunkun.sh") // open url in default app
+open.folder("/Users/kksh/Downloads/") // open folder
+open.file("/Users/kksh/Downloads/schema.mp4") // open file in default app
+```
+
+## Permissions
+
+Open API may potentially be used to open malicious URLs or files. 
+
+To prevent this, detailed permissions must be declared in the manifest file.
+Only URLs and file paths matching the declared patterns will be allowed.
+
+- `url`: `'open:url'` permission is required to use this API.
+- `folder`: `open:folder` permission is required to use this API.
+- `file`: `open:file` permission is required to use this API.
+
+### `url`
+
+```json
+"permissions": [
+  {
+    "permission": "open:url",
+    "allow": [
+      {
+        "url": "https://kunkun.sh"
+      },
+      {
+        "url": "https://kunkun.sh/**"
+      },
+      {
+        "url": "http://kunkun.sh"
+      },
+      {
+        "url": "mailto://**@gmail.com"
+      }
+    ]
+  }
+],
+```
+
+To allow any https URL, use `https://**`.
+
+### `folder`
+
+The following permissions means
+
+- Allow to open any folder under the `Desktop` folder (recursively)
+- Allow to open the `Downloads` folder
+- Allow to open any file in the `dev` folder under the `Documents` folder
+
+> See FS API for more details on the path pattern and folder alias.
+
+```json
+{
+  "permissions": [
+    {
+      "permission": "open:folder",
+      "allow": [
+        {
+          "path": "$DESKTOP/**"
+        },
+        {
+          "path": "$DOWNLOAD"
+        },
+        {
+          "path": "$DOCUMENT/dev/*"
+        }
+      ]
+    }
+  ],
+}
+```
+
+### `file`
+
+Similar to `openFolder`, but only allow to open files.
+
+Can be used set to open specific files only.
+
+> See FS API for more details on the path pattern and folder alias.
+
+```json
+{
+  "permissions": [
+    {
+      "permission": "open:folder",
+      "allow": [
+        {
+          "path": "$DESKTOP/**"
+        },
+        {
+          "path": "$DOWNLOAD/schema.json"
+        }
+      ],
+      "deny": [
+        {
+          "path": "$DESKTOP/malicious.sh"
+        }
+      ]
+    }
+  ],
+}
+```
+
