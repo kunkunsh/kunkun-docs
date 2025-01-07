@@ -40,11 +40,11 @@ Deno API is also part of the shell API, it's moved to a separate page: [Deno API
 
 ### Execute Command
 
-```ts
-import { shell } from "@kksh/api/ui/worker"
-// or
-import { shell } from "@kksh/api/ui/iframe"
+import ImportCodeBlock from '@/components/api/import-code-block.astro'
 
+<ImportCodeBlock apiName="shell" />
+
+```ts
 const cmd = shell.createCommand("echo", ["Hello World"])
 const output = await cmd.execute()
 console.log(output.stdout) // Hello World

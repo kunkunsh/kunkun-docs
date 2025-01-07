@@ -12,11 +12,11 @@ If you are using custom UI extension running in iframe, you can build your own t
 - `toast.warning`
 - `toast.error`
 
-```ts
-import { toast } from "@kksh/api/ui/worker"
-// or
-import { toast } from "@kksh/api/ui/iframe"
+import ImportCodeBlock from '@/components/api/import-code-block.astro'
 
+<ImportCodeBlock apiName="toast" />
+
+```ts
 // Show an error message
 await toast.error("Item not found")
 

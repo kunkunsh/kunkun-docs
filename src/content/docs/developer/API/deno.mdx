@@ -136,8 +136,11 @@ const api = channel.getApi()
 
 In main extension code, use `shell.createDenoRpcChannel` to start running a Deno script and get the API object.
 
+import ImportCodeBlock from '@/components/api/import-code-block.astro'
+
+<ImportCodeBlock apiName="deno" />
+
 ```ts title="extension.ts"
-import { shell } from "@kksh/api/ui/worker"; // iframe version works too
 import { type MathLibAPI } from "./types.ts"
 
 // ...

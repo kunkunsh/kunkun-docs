@@ -1,0 +1,40 @@
+---
+import { Tabs, TabItem, Code } from "@astrojs/starlight/components";
+const { apiName, disableMap } = Astro.props as {
+  apiName: string;
+  disableMap?: { template?: boolean; iframe?: boolean; headless?: boolean };
+};
+---
+
+<Tabs>
+  {
+    !disableMap?.template && (
+      <TabItem label="Template (worker)">
+        <Code
+          code={`import { ${apiName} } from "@kksh/api/ui/worker";`}
+          lang="js"
+        />
+      </TabItem>
+    )
+  }
+  {
+    !disableMap?.iframe && (
+      <TabItem label="Custom (iframe)">
+        <Code
+          code={`import { ${apiName} } from "@kksh/api/ui/iframe";`}
+          lang="js"
+        />
+      </TabItem>
+    )
+  }
+  {
+    !disableMap?.headless && (
+      <TabItem label="Headless (worker)">
+        <Code
+          code={`import { ${apiName} } from "@kksh/api/headless";`}
+          lang="js"
+        />
+      </TabItem>
+    )
+  }
+</Tabs>

@@ -69,11 +69,11 @@ For example, this is an example permission to access the `projects.json` file of
 
 Here is how to use the API in JS. A `baseDir` parameter can be provided as well.
 
-```ts
-import { fs, path } from "@kksh/api/ui/worker"
-// or
-import { fs, path } from "@kksh/api/ui/iframe"
+import ImportCodeBlock from '@/components/api/import-code-block.astro'
 
+<ImportCodeBlock apiName="fs, path" />
+
+```ts
 const fileContent: string = await fs.readTextFile(
     "Library/Application Support/Code/User/globalStorage/alefragnani.project-manager/projects.json",
     { baseDir: path.BaseDirectory.Home }

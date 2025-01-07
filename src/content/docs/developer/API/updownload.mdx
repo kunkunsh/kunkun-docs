@@ -7,11 +7,11 @@ description: Download and upload files
 
 ## API and Permissions
 
-```ts
-import { updownload, path } from '@kksh/api/ui/worker';
-// or
-import { updownload, path } from '@kksh/api/ui/iframe';
+import ImportCodeBlock from '@/components/api/import-code-block.astro'
 
+<ImportCodeBlock apiName="updownload, path" />
+
+```ts
 await updownload.download(
   'https://schema.kunkun.sh',
   await path.join(await path.desktopDir(), 'kk-ext-schema.json')

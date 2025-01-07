@@ -10,11 +10,11 @@ This API is very trivial and simple. It is used to get the path of various direc
 
 Read the docs for more.
 
-```ts
-import { path } from "@kksh/api/ui/worker"
-// or
-import { path } from "@kksh/api/ui/iframe"
+import ImportCodeBlock from '@/components/api/import-code-block.astro'
 
+<ImportCodeBlock apiName="path" />
+
+```ts
 const videoPath = await path.join(await path.desktopDir(), 'kunkun.mp4')
 // sample output: /Users/kksh/Desktop/kunkun.mp4
 ```

@@ -10,11 +10,11 @@ import OsApiList from "@/components/api/os-api-list.astro"
 
 <OsApiList />
 
-```ts
-import { os } from "@kksh/api/ui/worker"
-// or
-import { os } from "@kksh/api/ui/iframe"
+import ImportCodeBlock from '@/components/api/import-code-block.astro'
 
+<ImportCodeBlock apiName="os" />
+
+```ts
 const platform = await os.platform()
 console.log(platform) // "windows" | "mnacos" | "linux"
 ```
