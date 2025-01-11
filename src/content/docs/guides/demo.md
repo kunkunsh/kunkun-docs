@@ -31,8 +31,11 @@ It's recommended to use Mac for the best experience.
 
 It uses system keychain to store a randomly generated password to encrypt sqlite database,
 instead of using the same encryption key on everyone's machine.
-Storing the password on disk would be a security risk. Even with obfuscation or encryption,
+Storing the password in a regular file would be a security risk.
+Even with obfuscation or encryption,
 it's still possible to reverse engineer the binary to get the password.
+System keychain is the most secure way to store the password,
+but requires user to enter password when the app updates.
 
 </details>
 
