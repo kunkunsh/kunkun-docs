@@ -10,7 +10,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "Kunkun",
-      lastUpdated: true,
+      lastUpdated: false,
       logo: {
         // src: "./src/assets/kunkun-logo-gray.svg"
         light: "./src/assets/kunkun-logo.svg",
