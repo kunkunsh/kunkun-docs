@@ -5,6 +5,18 @@ sidebar:
   order: 1
 ---
 
+In the demo video below, I discussed the following:
+
+- What is Kunkun?
+- Why was is created?
+  - Open Source
+  - Cross-platform
+  - Security and Privacy (achieved with a strict permission model)
+  - More flexible (with web technologies, like Svelte)
+- How to use it?
+
+<video src="https://storage.kunkun.sh/kunkun-demo.mp4" controls></video>
+
 ## Installation
 
 Download Kunkun's installer from https://kunkun.sh/download.
