@@ -100,11 +100,11 @@ I want to create an app that functions like WeChat Mini Programs, but for the de
 
 - Desktop
   - Framework: Tauri
-  - Frontend: Vue & Nuxt
+  - Frontend: Sveltekit
   - Backend: Rust
 - Frontend
   - Tailwind CSS
-  - shadcn-vue
+  - shadcn-svelte
 - Backend
   - Server: Axum + Tonic (grpc)
 - Web Server
@@ -126,15 +126,15 @@ I want to create an app that functions like WeChat Mini Programs, but for the de
   - **Rust Backend:** Rust is fast and memory-safe, though challenging to write. It is the hardest high-level language I've encountered.
   - **Consideration for Wails:** Wails is another good alternative. Golang is much easier than rust. For this kind of app, Golang's GC is not a problem. I picked Tauri since Wails is not as mature as Tauri. Multi-window support is not stable yet. I may switch to Wails in the future if one day it becomes as good as Tauri.
   - Tauri v2 has a window-based permission system. Although this is not the only way to implement a permission system, this feature is very important for Kunkun. I may use this feature to restrict access of extensions to the OS.
-- **Vue+Nuxt** is my favorite frontend stack. I am familiar with React, Vue and Svelte.
+- **Sveltekit** is my favorite frontend stack. I am familiar with React, Vue and Svelte.
   - In terms of ecosystem, my ranking is React > Vue > Svelte.
   - In terms of the framework/language itself, my ranking is Svelte > Vue > React.
-  - There is no perfect framework, and there is always a trade-off. I picked Vue because it has a mature ecosystem and is easy to use.
-  - I always choose a meta-framework (Next, Nuxt, Sveltekit) rather than the vanilla framework when building a Tauri app. Metaframeworks provide lots of useful features out of the box. SSR isn't feasible for a desktop app, but other features like file-based routing, layouts, SSG, etc. are still useful. When an SPA grows, I have to do code splitting, lazy loading, etc. manually. Nuxt does this for me.
-  - Nuxt also have a Nuxt Modules ecosystem, which is so handy.
+  - There is no perfect framework, and there is always a trade-off. I picked Vue + Nuxt initially because it has a mature ecosystem and is easy to use. However, I then faced many problems with Nuxt when building a Tauri app, and eventually switched to Sveltekit, which I found to be the best choice for me.
+    - When I was using Nuxt, its auto import feature sounds very nice, but could be very inconvenient for debugging. When there is import error with a nuxt module, I don't know where is happens because all imports happen in background. I had to remove all nuxt modules and add them back one by one to see which one is causing the problem. I never had to do this again after switching to sveltekit.
+  - I always choose a **meta-framework** (Next, Nuxt, Sveltekit) rather than the vanilla framework when building a Tauri app. Metaframeworks provide lots of useful features out of the box. SSR isn't feasible for a desktop app, but other features like file-based routing, layouts, SSG, etc. are still useful. When an SPA grows, I have to do code splitting, lazy loading, etc. manually. A metaframework does this for me.
   - React is probably the most future proof. If you are unsure what library you will need in the future, React is a good choice. Most UI libraries support React or have a React version.
   - But I didn't have a good experience with React and especially Next.js when writing Tauri apps. The double mounting from React 18 is so annoying. `useEffect` doesn't support async. Tauri APIs are mostly async. A listener is usually obtained with `unlisten = await listen("event_name")`. I had to write a lot more boilerplate code in React to avoid listening twice than with Vue or Svelte. Next.js throws so many errors when I was building a Tauri app (I don't remember what they were but I wasted so much time on them rather than the app logic). I also have to keep thinking about using `use client;`. In Nuxt and Sveltekit, I never need to think about whether I am in the client or server (when building a pure frontend app).
 - **Rust** is nice. Fast and memory safe. Extremely hard to write, slow to build. Huge cache. (60GB accumulated for Kunkun). `node_modules` is not `heavy` at all compring to rust `target`. `target` is the heaviest object in the universe. I don't get it. I use rust because of Tauri. If Wails is as good as Tauri, I will happily switch to use Golang.
-- **TailwindCSS**: I don't think I need to explain this. I simply love it.
-- **Shadcn-vue**: a vue port from the original react shadcn. It's based on radix-vue. I like the styling of Shadcn and philosophy of letting user customize the components. And, I plan to support any SSG/CSR web app as an extension, which means any JS frameworks are supported. Shadcn is based on React, and there is ports for Vue and Svelte, with the same styling. It's simpler to keep extension UI styling consistent with the app UI styling if shadcn is used.
+- **TailwindCSS**: I don't think I need to explain this.
+- **Shadcn-svelte**: a svelte port from the original react shadcn. I like the styling of Shadcn and philosophy of letting user customize the components. And, I plan to support any SSG/CSR web app as an extension, which means any JS frameworks are supported. Shadcn is based on React, and there is ports for Vue and Svelte, with the same styling. It's simpler to keep extension UI styling consistent with the app UI styling if shadcn is used.
 - Axum+Tonic is probably the best choice in rust to support regular HTTP server and gRPC server together. I want to use gRPC because of its proto can guarantee the compatibility between the client and server. Reflection server is also easy for development, kind of like graphql.
