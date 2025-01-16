@@ -17,7 +17,7 @@ export default defineConfig({
         dark: "./src/assets/kunkun-logo-inverted.svg",
       },
       social: {
-        github: "https://github.com/HuakunTech/kunkun",
+        github: "https://github.com/kunkunsh/kunkun",
         discord: "https://discord.gg/7dzw3TYeTU",
       },
       components: {

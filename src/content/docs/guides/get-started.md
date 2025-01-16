@@ -9,7 +9,7 @@ sidebar:
 
 ## Installation
 
-For now, go to GitHub Release page to download the latest version of KK. https://github.com/HuakunTech/kunkun/releases
+For now, go to GitHub Release page to download the latest version of KK. https://github.com/kunkunsh/kunkun/releases
 
 In the future, KK will be published to package managers and a website will also be provided.
 
@@ -41,7 +41,7 @@ The magic of web-based extensions? Write your code once and deploy it across pla
 
 ### Open Source and Community-Driven
 
-All extensions source code are readily available on GitHub at [**KunkunExtensions**](https://github.com/HuakunTech/kunkunExtensions). This lets the community contribute, review code, and ensure quality.
+All extensions source code are readily available on GitHub at [**KunkunExtensions**](https://github.com/kunkunsh/kunkunExtensions). This lets the community contribute, review code, and ensure quality.
 
 ### Explore the Extension Store
 
@@ -69,5 +69,5 @@ Access to unauthorized APIs is strictly blocked and logged by KK. This ensures y
 
 ### Ready to Build?
 
-Head over to the [documentation](/extensions/write-extension/) or reach out to me on Discord. Once you've crafted your masterpiece, submit a Pull Request (PR) to the [**KunkunExtensions**](https://github.com/HuakunTech/kunkunExtensions) repository.
+Head over to the [documentation](/extensions/write-extension/) or reach out to me on Discord. Once you've crafted your masterpiece, submit a Pull Request (PR) to the [**KunkunExtensions**](https://github.com/kunkunsh/kunkunExtensions) repository.
 
