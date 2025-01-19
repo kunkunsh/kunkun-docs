@@ -7,16 +7,17 @@ sidebar:
 
 Extension is a powerful feature that allows users to extend the functionality however they want.
 
-However, great functionality requires access to file system and system APIs, which can be dangerous if not properly secured.
+However, great functionality may require access to file system and system APIs, which can be dangerous if not properly secured.
 
 Since community maintained extensions can be installed to Kunkun, there is no guarantee that the extension is safe,
 just like other extension systems like Chrome extensions, VSCode Extensions, Raycast Extensions, etc.
 We can only try to maintain a safety design to minimize the risk.
 
-All extensions are open sourced in GitHub Repo [KunkunExtensions](https://github.com/kunkunsh/kunkunExtensions/) for transparency and security review.
+All community extensions are open sourced on GitHub, and published to NPM or JSR with provenance statements.
+See [Design](/guides/extensions/publish/design/) for more details.
 
-Before a new extension is added, I will review the code and make sure it is safe to use.
-But there is no guarantee that the extension is completely safe as I can't review and test every single line of code.
+Provenance statements are not a guarantee of security, but it's a good start.
+With provenance statements, we can at least know the origin of the extension and the build process.
 
 ## Permission Management System
 
@@ -28,7 +29,7 @@ Although their extensions are all open sourced for review, there is still a risk
 KK also takes advantages of system APIs to provide powerful features, but it also has a multi-level
 permission management system to control what an extension can do.
 
-KK is designed to take a similar approach to Chrome extensions, where the required permission for an app must be declared in the manifest file.
+KK is designed to take a similar approach to Chrome extensions and Tauri, where the required permission for an app must be declared in the manifest file.
 
 The extension store will show the required permissions for each extension, and the user can decide whether to install it or not.
 
@@ -55,20 +56,7 @@ Fore more details about permission declaration, see [Extension Permissions](/ext
 
 Buildtime threats are the threats that happen when the extension is being built. e.g.
 
-All extensions are open sourced in GitHub Repo [KunkunExtensions](https://github.com/kunkunsh/kunkunExtensions/).
-
-CI will build all extensions to make sure they can be built on every commit.
+All extensions are open sourced with provenance statements. 
+One can easily find the exact repo, commit and GitHub Action workflow that built the extension.
 
 However, it is possible that some extensions includes malicious code that can be triggered during build time.
-
-`build` script in `package.json` for every extension is run during build time.
-`prebuild` or `postbuild` scripts in `package.json` can be used to run malicious code to alter the source code or
-even simply replace the tarball of another extension.
-
-If the malicious extension doesn't have shell permission, but infects another extension with shell permission, it can do a lot of damage.
-
-So it is crucial to isolate the build environment for each extension to make sure they can't affect each other.
-
-The extension upload CI doesn't build extensions altogether as a monorepo, but build them one by one in a docker container.
-
-Only the resulting tarball produced by `npm pack` will be taken and uploaded to the extension registry.

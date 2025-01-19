@@ -2,7 +2,7 @@
 title: Get Started
 description: Get started with Kunkun
 sidebar:
-  order: 0
+  order: -1
 ---
 
 **KK** is an open source cross-platform extensible app launcher that aims to be an alternative to Alfred and Raycast. This guide will help you get started with KK both as a user and a developer.
@@ -17,7 +17,7 @@ In the future, KK will be published to package managers and a website will also 
 
 KK is designed to be cross-platform. It not only supports Windows and MacOS, but also Linux.
 
-Linux is usually ignored by software companies and app developers as it has a small market share. 
+Linux is usually ignored by software companies and app developers as it has a small market share.
 
 However, as a developer myself, I admire the open source spirit of Linux and I want to make KK available to Linux users.
 
@@ -41,7 +41,7 @@ The magic of web-based extensions? Write your code once and deploy it across pla
 
 ### Open Source and Community-Driven
 
-All extensions source code are readily available on GitHub at [**KunkunExtensions**](https://github.com/kunkunsh/kunkunExtensions). This lets the community contribute, review code, and ensure quality.
+All community extensions are open source and available on GitHub. You can find the link to them (including the exactly commit and GitHub action workflow used to build the extension) in the extension store. This transparency ensures you know exactly what you're installing.
 
 ### Explore the Extension Store
 
@@ -69,5 +69,6 @@ Access to unauthorized APIs is strictly blocked and logged by KK. This ensures y
 
 ### Ready to Build?
 
-Head over to the [documentation](/extensions/write-extension/) or reach out to me on Discord. Once you've crafted your masterpiece, submit a Pull Request (PR) to the [**KunkunExtensions**](https://github.com/kunkunsh/kunkunExtensions) repository.
+Head over to the [Write Extension](/guides/extensions/write-extension/) or reach out to me on Discord.
+
 

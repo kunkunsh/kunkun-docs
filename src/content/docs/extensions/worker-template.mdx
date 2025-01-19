@@ -30,8 +30,7 @@ After creating a template project, you need to edit `package.json`.
 
 ### Add Dev Extension to Kunkun
 
-import AddDevExt from "./snippets/add-dev-ext.mdx"
-import ChangeDevExtPath from "./snippets/change-dev-ext-path.mdx"
+import AddDevExt from "./snippets/add-dev-ext.mdx";
 
 <AddDevExt />
 
@@ -96,15 +95,15 @@ Override the methods of this class to implement your extension.
 - `onFormSubmit`
 
 ```ts
-import { expose, WorkerExtension } from "@kksh/api/ui/worker"
+import { expose, WorkerExtension } from "@kksh/api/ui/worker";
 
 class DemoExtension extends WorkerExtension {
-	async load() {
-		// load method is run when the extension is loaded, you can use it as an initializer
-	}
+  async load() {
+    // load method is run when the extension is loaded, you can use it as an initializer
+  }
 }
 
-expose(new DemoExtension()) // expose this extension at the bottom of the file
+expose(new DemoExtension()); // expose this extension at the bottom of the file
 ```
 
 There is no concept like routing in worker template extension. Different views can be rendered with `ui.render()` method.
@@ -131,25 +130,25 @@ or replace bun with other build tools like esbuild, rollup, vite, etc.
 <summary>Sample Build Script</summary>
 
 ```ts
-import { watch } from "fs"
-import { join } from "path"
-import { refreshTemplateWorkerExtension } from "@kksh/api/dev"
-import { $ } from "bun"
+import { watch } from "fs";
+import { join } from "path";
+import { refreshTemplateWorkerExtension } from "@kksh/api/dev";
+import { $ } from "bun";
 
 async function build() {
-	await $`bun build --minify --target=browser --outdir=./dist ./src/index.ts`
-	await refreshTemplateWorkerExtension()
+  await $`bun build --minify --target=browser --outdir=./dist ./src/index.ts`;
+  await refreshTemplateWorkerExtension();
 }
 
-const srcDir = join(import.meta.dir, "src")
+const srcDir = join(import.meta.dir, "src");
 
-await build()
+await build();
 
 if (Bun.argv.includes("dev")) {
-	console.log(`Watching ${srcDir} for changes...`)
-	watch(srcDir, { recursive: true }, async (event, filename) => {
-		await build()
-	})
+  console.log(`Watching ${srcDir} for changes...`);
+  watch(srcDir, { recursive: true }, async (event, filename) => {
+    await build();
+  });
 }
 ```
 
@@ -193,31 +192,31 @@ Available form fields:
 - `Form.Form`
 
 ```ts
-import { expose, Form, ui, WorkerExtension } from "@kksh/api/ui/worker"
+import { expose, Form, ui, WorkerExtension } from "@kksh/api/ui/worker";
 
 class DemoExtension extends WorkerExtension {
-	async onFormSubmit(value: Record<string, any>): Promise<void> {
-		console.log("Form submitted", value)
-	}
-	async load() {
-		return ui.render(
-			new Form.Form({
-				key: "form1",
-				fields: [
-					new Form.NumberField({
-						key: "age",
-						label: "Age",
-						placeholder: "Enter your age"
-					}),
-					new Form.InputField({
-						key: "name"
-					})
-				]
-			})
-		)
-	}
+  async onFormSubmit(value: Record<string, any>): Promise<void> {
+    console.log("Form submitted", value);
+  }
+  async load() {
+    return ui.render(
+      new Form.Form({
+        key: "form1",
+        fields: [
+          new Form.NumberField({
+            key: "age",
+            label: "Age",
+            placeholder: "Enter your age",
+          }),
+          new Form.InputField({
+            key: "name",
+          }),
+        ],
+      })
+    );
+  }
 }
-expose(new DemoExtension())
+expose(new DemoExtension());
 ```
 
 ![](./form-view-demo.png)
@@ -232,85 +231,100 @@ Each item can contain multiple actions. When selected, `onActionSelected()` will
 ![](./list-view-demo.png)
 
 ```ts
-import { Action, expose, Icon, IconEnum, List, ui, WorkerExtension } from "@kksh/api/ui/worker"
+import {
+  Action,
+  expose,
+  Icon,
+  IconEnum,
+  List,
+  ui,
+  WorkerExtension,
+} from "@kksh/api/ui/worker";
 
 class DemoExtension extends WorkerExtension {
-	async onFormSubmit(value: Record<string, any>): Promise<void> {
-		console.log("Form submitted", value)
-	}
-	async load() {
-		return ui.setSearchBarPlaceholder("Enter search term").then(() => {
-			return ui.render(
-				new List.List({
-					sections: [
-						new List.Section({
-							title: "Section 1",
-							items: [
-								new List.Item({
-									title: "Hello, World!",
-									value: "Section 1 Hello, World!",
-									icon: new Icon({ type: IconEnum.Iconify, value: "gg:hello" })
-								}),
-								new List.Item({ title: "Hello, World 2!", value: "Section 1 Hello, World 2!" })
-							]
-						}),
-						new List.Section({
-							title: "Section 2",
-							items: [
-								new List.Item({
-									title: "Hello, World!",
-									value: "Section 2 Hello, World!",
-									icon: new Icon({ type: IconEnum.Iconify, value: "gg:hello" })
-								})
-							]
-						})
-					],
-					items: [
-						new List.Item({
-							title: "Hello, World!",
-							value: "Hello, World!",
-							icon: new Icon({ type: IconEnum.Iconify, value: "ri:star-s-fill" })
-						}),
-						new List.Item({
-							title: "Hello, World 2!",
-							value: "Hello, World 2!",
-							icon: new Icon({ type: IconEnum.Iconify, value: "gg:hello" }),
-							actions: new Action.ActionPanel({
-								items: [
-									new Action.Action({
-										title: "Open",
-										icon: new Icon({ type: IconEnum.Iconify, value: "ion:open-outline" })
-									})
-								]
-							})
-						})
-					]
-				})
-			)
-		})
-	}
+  async onFormSubmit(value: Record<string, any>): Promise<void> {
+    console.log("Form submitted", value);
+  }
+  async load() {
+    return ui.setSearchBarPlaceholder("Enter search term").then(() => {
+      return ui.render(
+        new List.List({
+          sections: [
+            new List.Section({
+              title: "Section 1",
+              items: [
+                new List.Item({
+                  title: "Hello, World!",
+                  value: "Section 1 Hello, World!",
+                  icon: new Icon({ type: IconEnum.Iconify, value: "gg:hello" }),
+                }),
+                new List.Item({
+                  title: "Hello, World 2!",
+                  value: "Section 1 Hello, World 2!",
+                }),
+              ],
+            }),
+            new List.Section({
+              title: "Section 2",
+              items: [
+                new List.Item({
+                  title: "Hello, World!",
+                  value: "Section 2 Hello, World!",
+                  icon: new Icon({ type: IconEnum.Iconify, value: "gg:hello" }),
+                }),
+              ],
+            }),
+          ],
+          items: [
+            new List.Item({
+              title: "Hello, World!",
+              value: "Hello, World!",
+              icon: new Icon({
+                type: IconEnum.Iconify,
+                value: "ri:star-s-fill",
+              }),
+            }),
+            new List.Item({
+              title: "Hello, World 2!",
+              value: "Hello, World 2!",
+              icon: new Icon({ type: IconEnum.Iconify, value: "gg:hello" }),
+              actions: new Action.ActionPanel({
+                items: [
+                  new Action.Action({
+                    title: "Open",
+                    icon: new Icon({
+                      type: IconEnum.Iconify,
+                      value: "ion:open-outline",
+                    }),
+                  }),
+                ],
+              }),
+            }),
+          ],
+        })
+      );
+    });
+  }
 
-	async onSearchTermChange(term: string): Promise<void> {
-		console.log("Search term changed to:", term)
-	}
+  async onSearchTermChange(term: string): Promise<void> {
+    console.log("Search term changed to:", term);
+  }
 
-	async onItemSelected(value: string): Promise<void> {
-		console.log("Item selected:", value)
-	}
+  async onItemSelected(value: string): Promise<void> {
+    console.log("Item selected:", value);
+  }
 
-	async onActionSelected(value: string): Promise<void> {
-		console.log("Action selected:", value)
-	}
+  async onActionSelected(value: string): Promise<void> {
+    console.log("Action selected:", value);
+  }
 }
-expose(new DemoExtension())
+expose(new DemoExtension());
 ```
 
-import VerifyInstructions from "./snippets/verify-instructions.mdx"
+import VerifyInstructions from "./snippets/verify-instructions.mdx";
 
 <VerifyInstructions />
 
 ## Publish
 
-import PublishInstruction from "./snippets/publish-instruction.mdx"
-
-<PublishInstruction />
+See [Guide: Extension Publish](/guides/extensions/publish/design) for more details.
