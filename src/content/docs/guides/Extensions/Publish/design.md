@@ -1,5 +1,5 @@
 ---
-title: Design
+title: Extension Publish Workflow
 sidebar:
   order: 0
 ---
@@ -13,6 +13,9 @@ To publish an extension to KK's extension store, follow one of these guides:
 
 ## Overview
 
+<div style="height: 400px">
+  <iframe width="100%" style="height: 100%;" src="https://www.youtube.com/embed/QPZtUDUGr5s" title="Kunkun: Publish Extension Design" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 This article explains KK's extension publishing system and its core design principles.
 
 The system is built around two fundamental goals:
@@ -26,8 +29,9 @@ While KK implements a permission control system to restrict extension capabiliti
 
 This is one key reason why we require extensions to be open source. However, open source alone doesn't ensure complete transparency and security. For example, while npm packages typically link to their GitHub source code, there's no inherent guarantee that the published package is indeed built from the source code. A malicious actor could modify code locally before publishing to npm.
 
-To address this security gap, both npm and jsr support provenance statements. 
+To address this security gap, both npm and jsr support provenance statements.
 See
+
 - https://docs.npmjs.com/generating-provenance-statements
 - https://jsr.io/docs/trust
 
@@ -51,5 +55,6 @@ The current publishing process works as follows:
 2. Developers then register their extension through our website
 
 For detailed publishing instructions, see the following guides:
+
 - [Publishing with NPM](./npm)
 - [Publishing with JSR](./jsr)
