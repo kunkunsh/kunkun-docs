@@ -71,4 +71,23 @@ Access to unauthorized APIs is strictly blocked and logged by KK. This ensures y
 
 Head over to the [Write Extension](/guides/extensions/write-extension/) or reach out to me on Discord.
 
+:::tip
+See [YouTube Playlist](https://www.youtube.com/playlist?list=PLUxw2JoWliirhQROHwpa0yMEYiUHoGw2_) for more videos.
+:::
 
+<div style="height: 400px">
+  <iframe
+    width="100%"
+    style="height: 100%;"
+    src="https://www.youtube.com/embed/jwcoMsKnn8Y"
+    title="Kunkun: Extension Architecture"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+  ></iframe>
+</div>
+
+<div style="height: 400px">
+  <iframe width="100%" style="height: 100%;" src="https://www.youtube.com/embed/QPZtUDUGr5s" title="Kunkun: Publish Extension Design" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>

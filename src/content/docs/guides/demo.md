@@ -17,6 +17,10 @@ In the demo video below, I discussed the following:
 
 <video src="https://storage.kunkun.sh/kunkun-demo.mp4" controls></video>
 
+:::tip
+See [YouTube Playlist](https://www.youtube.com/playlist?list=PLUxw2JoWliirhQROHwpa0yMEYiUHoGw2_) for more videos.
+:::
+
 ## Installation
 
 Download Kunkun's installer from https://kunkun.sh/download.
