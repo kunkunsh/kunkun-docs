@@ -2,13 +2,15 @@
 title: Svelte
 ---
 
-
 import { Code } from '@astrojs/starlight/components';
 import SvelteCmdDemo from "@/components/demo/svelte/command.svelte";
 import { Button } from '@kksh/svelte';
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-**NPM Package:** `@kksh/svelte` ![NPM Version](https://img.shields.io/npm/v/%40kksh%2Fsvelte)
+**NPM Package (svelte 4):** `@kksh/svelte` ![NPM Version](https://img.shields.io/npm/v/%40kksh%2Fsvelte)
+
+As svelte 5 is released in 2024, we have released a new package `@kksh/svelte5` for svelte 5.
+**NPM Package (svelte 5):** `@kksh/svelte5` ![NPM Version](https://img.shields.io/npm/v/%40kksh%2Fsvelte5)
 
 **Original Shadcn Svelte:** https://www.shadcn-svelte.com/
 
@@ -32,7 +34,7 @@ Most of Shadcn components are exported from `@kksh/svelte` package.
 
 ```svelte
 <script>
-	import { Button } from "@kksh/svelte"
+	import { Button } from "@kksh/svelte5"
 </script>
 
 <Button>Hello Kunkun!</Button>
@@ -63,7 +65,7 @@ Most of Shadcn components are exported from `@kksh/svelte` package.
 	import Person from "svelte-radix/Person.svelte";
 	import Rocket from "svelte-radix/Rocket.svelte";
 
-	import { Command } from "@kksh/svelte";
+	import { Command } from "@kksh/svelte5";
 </script>
 
 <Command.Root class="max-w-[450px] rounded-lg border shadow-md">
@@ -120,7 +122,7 @@ You can get KK's color theme and set your extension theme to match KK's theme.
 ```svelte
 <script>
 	import { ui } from "@kksh/api/ui/iframe"
-	import { updateTheme } from "@kksh/svelte"
+	import { updateTheme } from "@kksh/svelte5"
 
 	onMount(() => {
 		ui.getTheme().then((theme) => {
