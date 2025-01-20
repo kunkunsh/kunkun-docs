@@ -105,3 +105,10 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 ```
 
+## Register your Extension
+
+Go to https://kunkun.sh/dashboard/publish-extension/npm, enter your npm package name.
+
+Make sure you login with GitHub, it needs to verify the ownership of the package.
+
+![](../../../../../assets/demo/instructions/npm-publish.png)
