@@ -79,7 +79,7 @@ See [YouTube Playlist](https://www.youtube.com/playlist?list=PLUxw2JoWliioxX3klg
   <iframe
     width="100%"
     style="height: 100%;"
-    src="https://www.youtube.com/embed/DW1OKVHsbnE"
+    src="https://www.youtube.com/embed/NBti-LzDTTI"
     title="Kunkun: Extension Architecture"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
