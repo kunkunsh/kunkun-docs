@@ -58,7 +58,7 @@ jobs:
 
 `workflow_dispatch:` means you have to go to GitHub Action tab in your repo and manually trigger the workflow.
 
-You can configure it to run on **release created** event or **push event** to main branch. 
+You can configure it to run on **release created** event or **push event** to main branch.
 
 If you let it trigger on push, publishing duplicate version to npm will fail.
 
@@ -86,21 +86,15 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: bun install
       - run: bun run build
-      - run: |
-          PACKAGE_NAME=$(jq -r '.name' package.json)
-          PACKAGE_VERSION=$(jq -r '.version' package.json)
-
-          # Get the version from npm registry
-          REGISTRY_VERSION=$(npm show "$PACKAGE_NAME" version)
-
-          # Compare versions
-          if [ "$PACKAGE_VERSION" == "$REGISTRY_VERSION" ]; then
-            echo "Version $PACKAGE_VERSION already exists in the npm registry."
-            exit 0
-          else
-            echo "Version $PACKAGE_VERSION does not exist in the npm registry. Proceeding..."
-            npm publish --provenance --access public
-          fi
+      - name: Check if version is already published
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          npm view <package-name>@$PACKAGE_VERSION
+        continue-on-error: true
+        id: check_version
+      - name: Publish
+        if: steps.check_version.outcome != 'success'
+        run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 ```
