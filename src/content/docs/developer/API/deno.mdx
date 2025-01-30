@@ -64,8 +64,8 @@ All API methods must be `async` functions (return `Promise`), otherwise the retu
 
 ```ts title="types.ts"
 export interface MathLibAPI {
-	add(a: number, b: number): Promise<number>
-	subtract(a: number, b: number): Promise<number>
+  add(a: number, b: number): Promise<number>;
+  subtract(a: number, b: number): Promise<number>;
 }
 ```
 
@@ -82,31 +82,31 @@ This will create a import map in `deno.json`
 
 ```json title="deno-src/deno.json"
 {
-	"imports": {
-		"@kunkun/api": "jsr:@kunkun/api@^x.x.x" // Use the latest version
-	}
+  "imports": {
+    "@kunkun/api": "jsr:@kunkun/api@^x.x.x" // Use the latest version
+  }
 }
 ```
 
 Kunkun's API package for Deno is on JSR, https://jsr.io/@kunkun/api
-Note: the scope is `@kunkun` rather than `@kksh`. This is because `@kunkun` scope was taken on npm registry. 
+Note: the scope is `@kunkun` rather than `@kksh`. This is because `@kunkun` scope was taken on npm registry.
 
 `expose` function is provided by `@kunkun/api/runtime/deno` to expose the API object to its parent process.
 
 ```ts title="deno-src/math-lib.ts"
-import { expose } from '@kunkun/api/runtime/deno'
-import { type MathLibAPI } from "../types.ts"
+import { expose } from "@kunkun/api/runtime/deno";
+import { type MathLibAPI } from "../types.ts";
 
 // Define your API methods
 export const mathLib: MathLibAPI = {
-	add: async (a: number, b: number) => a + b,
-	subtract: async (a: number, b: number) => a - b
-}
+  add: async (a: number, b: number) => a + b,
+  subtract: async (a: number, b: number) => a - b,
+};
 
-expose(apiMethods)
+expose(apiMethods);
 ```
 
-`expose()` is a wrapper function for building a bidirectional RPC channel. It returns the `RPCChannel` object, 
+`expose()` is a wrapper function for building a bidirectional RPC channel. It returns the `RPCChannel` object,
 which can be used to call API exposed from the other side of the channel.
 
 <details>
@@ -117,51 +117,56 @@ You shouldn't need to worry about how the channel is created, but here is how it
 It's based on `@hk/comlink-stdio` package, see https://jsr.io/@hk/comlink-stdio
 
 ```ts title="deno-src/math-lib.ts"
-import { DenoStdio, RPCChannel } from "@hk/comlink-stdio"
-import { type MathLibAPI } from "../types.ts"
+import { DenoStdio, RPCChannel } from "@hk/comlink-stdio";
+import { type MathLibAPI } from "../types.ts";
 
 // Define your API methods
 export const mathLib: MathLibAPI = {
-	add: async (a: number, b: number) => a + b,
-	subtract: async (a: number, b: number) => a - b
-}
+  add: async (a: number, b: number) => a + b,
+  subtract: async (a: number, b: number) => a - b,
+};
 
-const stdio = new DenoStdio(Deno.stdin.readable, Deno.stdout.writable)
-const channel = new RPCChannel<MathLibAPI, {}>(stdio, mathLib)
-const api = channel.getApi()
+const stdio = new DenoStdio(Deno.stdin.readable, Deno.stdout.writable);
+const channel = new RPCChannel<MathLibAPI, {}>(stdio, mathLib);
+const api = channel.getApi();
 ```
+
 </details>
 
 #### Extension Code
 
 In main extension code, use `shell.createDenoRpcChannel` to start running a Deno script and get the API object.
 
-import ImportCodeBlock from '@/components/api/import-code-block.astro'
+import ImportCodeBlock from "@/components/api/import-code-block.astro";
 
 <ImportCodeBlock apiName="deno" />
 
 ```ts title="extension.ts"
-import { type MathLibAPI } from "./types.ts"
+import { type MathLibAPI } from "./types.ts";
 
 // ...
 // First generic is Local API interface to expose to the other side of the channel. We set it to {} to not expose any API. Last function parameter is the implementation of the API, which we also set to {}
 const { rpcChannel, process } = await shell.createDenoRpcChannel<
   {},
   MathLibAPI
->("$EXTENSION/deno-src/math-lib.ts", [], {
-  allowRead: ["$DESKTOP/**"]
-}, {});
-
+>(
+  "$EXTENSION/deno-src/math-lib.ts",
+  [],
+  {
+    allowRead: ["$DESKTOP/**"],
+  },
+  {}
+);
 
 const api = rpcChannel.getApi();
 await api.add(1, 2).then(console.log); // 3
 await api.subtract(1, 2).then(console.log); // -1
 
-await process.kill() // please always remember to kill the Deno process, or it may run forever
+await process.kill(); // please always remember to kill the Deno process, or it may run forever
 ```
 
 :::danger
-Please remember to kill the process manually after you are done using the API. 
+Please remember to kill the process manually after you are done using the API.
 Otherwise, the process could run in the background forever.
 
 An auto process cleanup mechanism is implemented in Kunkun to auto kill all leftover processes when an extension quits, but it's still better to control it manually.
@@ -179,34 +184,30 @@ In this sample, we will transform an image with [sharp](https://sharp.pixelplumb
 
 Suppose we have a template worker extension project with the following structure:
 
-import { FileTree } from '@astrojs/starlight/components';
+import { FileTree } from "@astrojs/starlight/components";
 
-<FileTree>
-- src
-  - deno-script.ts
-  - index.ts
-- ...
-</FileTree>
+<FileTree>- src - deno-script.ts - index.ts - ...</FileTree>
 
 `index.ts` is the entrypoint to the extension command, `deno-script.ts` is a script that will be executed by Deno.
 
 ```ts title="deno-script.ts"
-import { parseArgs } from "jsr:@std/cli/parse-args"
-import sharp from "npm:sharp"
+import { parseArgs } from "jsr:@std/cli/parse-args";
+import sharp from "npm:sharp";
 
-const args = parseArgs(Deno.args)
-console.log(args)
+const args = parseArgs(Deno.args);
+console.log(args);
 
-const input = args.i
-const output = args.o
+const input = args.i;
+const output = args.o;
 
-sharp(input).blur(10).resize(300, 300).toFile(output)
+sharp(input).blur(10).resize(300, 300).toFile(output);
 ```
 
-The deno script above is very simple, it takes in an input image path and output image path, 
+The deno script above is very simple, it takes in an input image path and output image path,
 then apply blur and resize and save to output path.
 
-To run this sample directly with `deno`: 
+To run this sample directly with `deno`:
+
 ```bash
 deno run --allow-ffi \
   --allow-env=npm_package_config_libvips,CWD \
@@ -259,14 +260,16 @@ This step prevents the extension from executing any code beyond the predefined l
 ...
 "permissions": [
   {
-    "permission": "shell:deno:execute",
+    "permission": "shell:deno:spawn",
     "allow": [
       {
-        "path": "$EXTENSION/src/deno-script.ts",
+        "path": "$EXTENSION/deno-src/index.ts",
         "env": ["npm_package_config_libvips", "CWD"],
         "ffi": "*",
         "read": ["$DESKTOP"]
-      }
+      },
+      "shell:stdin-write",
+      "shell:kill"
     ]
   },
   ...
@@ -291,3 +294,5 @@ They are `string[]` or `"*"`, when set to `"*"`, it allows all.
 For example, setting `"read": "*"` allows setting `allowAllRead` to true in `shell.createDenoCommand`, and will be translated to `--allow-read` in the code execution.
 
 Setting `"read": ["$DESKTOP"]` allows you to set `allowRead: ["$DESKTOP"]` in `shell.createDenoCommand`, and will be translated to `--allow-read=/Users/user/Desktop` in the code execution.
+
+`"shell:stdin-write"` and `"shell:kill"` are also required permissions as the deno command uses stdin to communicate with the extension, and extension needs to kill the process after it's done.

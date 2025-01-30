@@ -59,7 +59,7 @@ I don't understand why raycast is so big as a native app. Its NodeJS runtime is 
   - Most importantly, for such apps, extension ecosystem is very important, and JS is the most popular language for extensions. VSCode is a good example.
 - Although Raycast extensioins are written with React/JS, the app itself is not web-based. React is used as a templating engine. The benefits of web technologies are not fully utilized.
 
-### HIC
+### HCI
 
 I love the design of Raycast, which offers a hands-on keyboard experience similar to Vim. I also appreciate the flexibility of uTools, which leverages web technologies to provide a customizable UI.
 
