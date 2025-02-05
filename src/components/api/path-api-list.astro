@@ -1,13 +1,50 @@
 ---
-import { path } from "@kksh/api/ui/worker"
+const apis = [
+  "appCacheDir",
+  "appConfigDir",
+  "appDataDir",
+  "appLocalDataDir",
+  "appLogDir",
+  "audioDir",
+  "BaseDirectory",
+  "basename",
+  "cacheDir",
+  "configDir",
+  "dataDir",
+  "delimiter",
+  "desktopDir",
+  "dirname",
+  "documentDir",
+  "downloadDir",
+  "executableDir",
+  "extname",
+  "fontDir",
+  "homeDir",
+  "isAbsolute",
+  "join",
+  "localDataDir",
+  "normalize",
+  "pictureDir",
+  "publicDir",
+  "resolve",
+  "resolveResource",
+  "resourceDir",
+  "runtimeDir",
+  "sep",
+  "tempDir",
+  "templateDir",
+  "videoDir",
+  "extensionDir",
+  "extensionSupportDir",
+];
 ---
 
 <ul>
-	{
-		Object.keys(path).map((methodName) => (
-			<li>
-				<code>{methodName}</code>
-			</li>
-		))
-	}
+  {
+    apis.map((methodName) => (
+      <li>
+        <code>{methodName}</code>
+      </li>
+    ))
+  }
 </ul>
