@@ -17,7 +17,7 @@
 		"@astrojs/svelte": "^5.7.1",
 		"@astrojs/tailwind": "^5.1.1",
 		"@astrojs/vue": "^4.5.0",
-		"@kksh/api": "0.0.18",
+		"@kksh/api": "0.1.0",
 		"@kksh/react": "^0.1.1",
 		"@kksh/svelte": "^0.1.4",
 		"@kksh/vue": "^0.1.3",
@@ -42,5 +42,5 @@
 	"devDependencies": {
 		"astro-vtbot": "^1.8.4"
 	},
-	"packageManager": "pnpm@9.15.2"
+	"packageManager": "pnpm@9.15.4"
 }

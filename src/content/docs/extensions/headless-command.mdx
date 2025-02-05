@@ -57,18 +57,18 @@ npm init kunkun@latest  # choose the template
 This simple extension simply generates a UUID v4 and copies it to the clipboard.
 Thus why `"clipboard:write-text"` permission is required in `package.json`.
 
-`HeadlessWorkerExtension` is the base class for headless commands.
+`HeadlessCommand` is the base class for headless commands.
 
 ```ts
 import {
   clipboard,
   expose,
-  HeadlessWorkerExtension,
+  HeadlessCommand,
   toast,
 } from "@kksh/api/headless";
 import { v4 as uuidv4 } from "uuid";
 
-class UuidExt extends HeadlessWorkerExtension {
+class UuidExt extends HeadlessCommand {
   async load() {
     const uuid = uuidv4();
     return clipboard

@@ -75,7 +75,7 @@ pnpm dev # start the development server, basically running `build` with watch mo
 In dev mode (`pnpm dev`), every time you save the file, the extension will be recompiled and Kunkun desktop app will be notified to reload the extension.
 Otherwise you need to manually reload the extension.
 
-A template worker extension should `extends` abstract class `WorkerExtension` (https://docs.api.kunkun.sh/classes/ui_worker.WorkerExtension)
+A template worker extension should `extends` abstract class `TemplateUiCommand` (https://docs.api.kunkun.sh/classes/ui_worker.TemplateUiCommand)
 
 Override the methods of this class to implement your extension.
 
@@ -95,9 +95,9 @@ Override the methods of this class to implement your extension.
 - `onFormSubmit`
 
 ```ts
-import { expose, WorkerExtension } from "@kksh/api/ui/worker";
+import { expose, TemplateUiCommand } from "@kksh/api/ui/worker";
 
-class DemoExtension extends WorkerExtension {
+class DemoExtension extends TemplateUiCommand {
   async load() {
     // load method is run when the extension is loaded, you can use it as an initializer
   }
@@ -132,12 +132,12 @@ or replace bun with other build tools like esbuild, rollup, vite, etc.
 ```ts
 import { watch } from "fs";
 import { join } from "path";
-import { refreshTemplateWorkerExtension } from "@kksh/api/dev";
+import { refreshTemplateWorkerCommand } from "@kksh/api/dev";
 import { $ } from "bun";
 
 async function build() {
   await $`bun build --minify --target=browser --outdir=./dist ./src/index.ts`;
-  await refreshTemplateWorkerExtension();
+  await refreshTemplateWorkerCommand();
 }
 
 const srcDir = join(import.meta.dir, "src");
@@ -163,9 +163,9 @@ Template Command follows templates. Each template is a type of view.
 Basically renders markdown on page.
 
 ```ts
-import { expose, Form, ui, WorkerExtension } from "@kksh/api/ui/worker"
+import { expose, Form, ui, TemplateUiCommand } from "@kksh/api/ui/worker"
 
-class DemoExtension extends WorkerExtension {
+class DemoExtension extends TemplateUiCommand {
 	load() {
 		return ui.render(new Markdown("# Hello, World!"))
 	}
@@ -192,9 +192,9 @@ Available form fields:
 - `Form.Form`
 
 ```ts
-import { expose, Form, ui, WorkerExtension } from "@kksh/api/ui/worker";
+import { expose, Form, ui, TemplateUiCommand } from "@kksh/api/ui/worker";
 
-class DemoExtension extends WorkerExtension {
+class DemoExtension extends TemplateUiCommand {
   async onFormSubmit(value: Record<string, any>): Promise<void> {
     console.log("Form submitted", value);
   }
@@ -238,10 +238,10 @@ import {
   IconEnum,
   List,
   ui,
-  WorkerExtension,
+  TemplateUiCommand,
 } from "@kksh/api/ui/worker";
 
-class DemoExtension extends WorkerExtension {
+class DemoExtension extends TemplateUiCommand {
   async onFormSubmit(value: Record<string, any>): Promise<void> {
     console.log("Form submitted", value);
   }

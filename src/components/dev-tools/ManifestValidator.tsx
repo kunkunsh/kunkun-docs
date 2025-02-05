@@ -47,7 +47,7 @@ const defaultJson = `{
     "build": "rimraf dist && rollup -c"
   },
   "dependencies": {
-    "@kksh/api": "0.0.4-beta.0",
+    "@kksh/api": "0.1.0",
     "valibot": "^0.36.0"
   },
   "devDependencies": {

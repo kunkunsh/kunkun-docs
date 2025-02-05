@@ -279,9 +279,9 @@ In the following sample code, we will use `shell.createDenoCommand` to create a 
 See https://docs.api.kunkun.sh/interfaces/index.DenoRunConfig for options you can pass to `shell.createDenoCommand`.
 
 ```ts title="index.ts"
-import { shell, path, WorkerExtension } from "@kksh/api/ui/worker";
+import { shell, path, TemplateUiCommand } from "@kksh/api/ui/worker";
 
-class ExtensionTemplate extends WorkerExtension {
+class ExtensionTemplate extends TemplateUiCommand {
   async load() {
     const denoCmd = shell.createDenoCommand(
       "$EXTENSION/src/deno-script.ts",
