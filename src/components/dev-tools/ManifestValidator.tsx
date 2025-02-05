@@ -48,7 +48,7 @@ const defaultJson = `{
   },
   "dependencies": {
     "@kksh/api": "0.1.0",
-    "valibot": "^0.36.0"
+    "valibot": "^0.1.0-beta.15",
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^26.0.1",
