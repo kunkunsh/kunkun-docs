@@ -95,7 +95,7 @@ Override the methods of this class to implement your extension.
 - `onFormSubmit`
 
 ```ts
-import { expose, TemplateUiCommand } from "@kksh/api/ui/worker";
+import { expose, TemplateUiCommand } from "@kksh/api/ui/template";
 
 class DemoExtension extends TemplateUiCommand {
   async load() {
@@ -163,7 +163,7 @@ Template Command follows templates. Each template is a type of view.
 Basically renders markdown on page.
 
 ```ts
-import { expose, Form, ui, TemplateUiCommand } from "@kksh/api/ui/worker"
+import { expose, Form, ui, TemplateUiCommand } from "@kksh/api/ui/template"
 
 class DemoExtension extends TemplateUiCommand {
 	load() {
@@ -192,7 +192,7 @@ Available form fields:
 - `Form.Form`
 
 ```ts
-import { expose, Form, ui, TemplateUiCommand } from "@kksh/api/ui/worker";
+import { expose, Form, ui, TemplateUiCommand } from "@kksh/api/ui/template";
 
 class DemoExtension extends TemplateUiCommand {
   async onFormSubmit(value: Record<string, any>): Promise<void> {
@@ -239,7 +239,7 @@ import {
   List,
   ui,
   TemplateUiCommand,
-} from "@kksh/api/ui/worker";
+} from "@kksh/api/ui/template";
 
 class DemoExtension extends TemplateUiCommand {
   async onFormSubmit(value: Record<string, any>): Promise<void> {

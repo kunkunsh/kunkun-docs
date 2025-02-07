@@ -11,7 +11,7 @@ const { apiName, disableMap } = Astro.props as {
     !disableMap?.template && (
       <TabItem label="Template (worker)">
         <Code
-          code={`import { ${apiName} } from "@kksh/api/ui/worker";`}
+          code={`import { ${apiName} } from "@kksh/api/ui/template";`}
           lang="js"
         />
       </TabItem>
@@ -21,7 +21,7 @@ const { apiName, disableMap } = Astro.props as {
     !disableMap?.iframe && (
       <TabItem label="Custom (iframe)">
         <Code
-          code={`import { ${apiName} } from "@kksh/api/ui/iframe";`}
+          code={`import { ${apiName} } from "@kksh/api/ui/custom";`}
           lang="js"
         />
       </TabItem>

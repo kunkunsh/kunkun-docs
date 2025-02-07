@@ -37,7 +37,7 @@ You can hide these buttons if you want to provide your own
 Here we use the back button as an example.
 
 ```ts
-import { ui } from "@kksh/api/ui/iframe"
+import { ui } from "@kksh/api/ui/custom"
 
 type CustomPosition = {
 	top: number,
@@ -60,7 +60,7 @@ await ui.hideBackButton()
 ### Navigation
 
 ```ts
-import { ui } from "@kksh/api/ui/iframe"
+import { ui } from "@kksh/api/ui/custom"
 
 /**
  * Will return to main page if the extension runs in the main window
@@ -77,7 +77,7 @@ ui.reloadPage()
 ### Window Control
 
 ```ts
-import { ui } from "@kksh/api/ui/iframe"
+import { ui } from "@kksh/api/ui/custom"
 
 // maximize the window
 ui.toggleMaximize()
