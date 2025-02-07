@@ -81,10 +81,10 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - name: Install dependencies
         run: bun install
-      - name: Verify Package
-        run: bunx kksh verify --publish
       - name: Build
         run: bun run build
+      - name: Verify Package
+        run: bunx kksh verify --publish
       - name: Publish package
         run: bunx jsr publish
 ```
