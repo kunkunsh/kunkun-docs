@@ -8,8 +8,8 @@ sidebar:
 
 To publish an extension to KK's extension store, follow one of these guides:
 
-1. [Publishing with NPM](./npm)
-2. [Publishing with JSR](./jsr)
+1. [Publishing with NPM](/guides/extensions/publish/npm)
+2. [Publishing with JSR](/guides/extensions/publish/jsr)
 
 ## Overview
 
@@ -56,5 +56,5 @@ The current publishing process works as follows:
 
 For detailed publishing instructions, see the following guides:
 
-- [Publishing with NPM](./npm)
-- [Publishing with JSR](./jsr)
+1. [Publishing with NPM](/guides/extensions/publish/npm)
+2. [Publishing with JSR](/guides/extensions/publish/jsr)
