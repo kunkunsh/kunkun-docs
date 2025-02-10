@@ -9,9 +9,7 @@ sidebar:
 
 ## Installation
 
-For now, go to GitHub Release page to download the latest version of KK. https://github.com/kunkunsh/kunkun/releases
-
-In the future, KK will be published to package managers and a website will also be provided.
+Download the app from the official website https://kunkun.sh/download, or GitHub release https://github.com/kunkunsh/kunkun/releases
 
 ## Supported Platforms
 
