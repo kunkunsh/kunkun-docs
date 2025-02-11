@@ -27,11 +27,13 @@ Only URLs and file paths matching the declared patterns will be allowed.
 
 ### `url`
 
-```json
-"permissions": [
-  {
-    "permission": "open:url",
-    "allow": [
+```json title="package.json"
+{
+  ...
+  "permissions": [
+    {
+      "permission": "open:url",
+      "allow": [
       {
         "url": "https://kunkun.sh"
       },
@@ -45,8 +47,10 @@ Only URLs and file paths matching the declared patterns will be allowed.
         "url": "mailto://**@gmail.com"
       }
     ]
-  }
-],
+    }
+  ],
+  ...
+}
 ```
 
 To allow any https URL, use `https://**`.
@@ -61,8 +65,9 @@ The following permissions means
 
 > See FS API for more details on the path pattern and folder alias.
 
-```json
+```json title="package.json"
 {
+  ...
   "permissions": [
     {
       "permission": "open:folder",
@@ -79,6 +84,7 @@ The following permissions means
       ]
     }
   ],
+  ...
 }
 ```
 
@@ -90,11 +96,12 @@ Can be used set to open specific files only.
 
 > See FS API for more details on the path pattern and folder alias.
 
-```json
+```json title="package.json"
 {
+  ...
   "permissions": [
     {
-      "permission": "open:folder",
+      "permission": "open:file",
       "allow": [
         {
           "path": "$DESKTOP/**"
@@ -110,6 +117,7 @@ Can be used set to open specific files only.
       ]
     }
   ],
+  ...
 }
 ```
 

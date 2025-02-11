@@ -213,6 +213,7 @@ Using Deno as a library requires `shell:deno:spawn` permission because it will b
 
 ```ts title="package.json"
 {
+  ...
   "permissions": [
     {
 				"permission": "shell:deno:spawn",
@@ -226,6 +227,7 @@ Using Deno as a library requires `shell:deno:spawn` permission because it will b
 			"shell:stdin-write",
 			"shell:kill"
   ]
+  ...
 }
 ```
 
