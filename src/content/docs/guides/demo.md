@@ -15,7 +15,9 @@ In the demo video below, I discussed the following:
   - More flexible (with web technologies, like Svelte)
 - How to use it?
 
-<video src="https://storage.kunkun.sh/kunkun-demo.mp4" controls></video>
+<div style="height: 300px;">
+  <iframe width="100%" style="height: 100%;" src="https://www.youtube.com/embed/HfQb38s8VjY" title="Kunkun: open source, cross-platform alternative to Raycast" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 
 :::tip
 See [YouTube Playlist](https://www.youtube.com/playlist?list=PLUxw2JoWliirhQROHwpa0yMEYiUHoGw2_) for more videos.

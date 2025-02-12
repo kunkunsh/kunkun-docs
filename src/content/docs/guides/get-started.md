@@ -7,6 +7,10 @@ sidebar:
 
 **KK** is an open source cross-platform extensible app launcher that aims to be an alternative to Alfred and Raycast. This guide will help you get started with KK both as a user and a developer.
 
+<div style="height: 300px;">
+<iframe width="100%" style="height: 100%;" src="https://www.youtube.com/embed/HfQb38s8VjY" title="Kunkun: open source, cross-platform alternative to Raycast" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
 ## Installation
 
 Download the app from the official website https://kunkun.sh/download, or GitHub release https://github.com/kunkunsh/kunkun/releases
