@@ -4,25 +4,41 @@ sidebar:
   order: 1
 ---
 
+https://github.com/kunkunsh/kunkun/blob/develop/CONTRIBUTING.md
+
 If you are interested in contributing to the project, please read the following guidelines.
 
 ## Development
 
 ### Prerequisites
 
-- Node.js LTS
-- pnpm
-- Bun
-- Deno (optional, used in some extensions)
-- Rust
+- [Node.js](https://nodejs.org/en)
+- [pnpm](https://pnpm.io/)
+- [Bun](https://bun.sh/)
+- [Deno](https://deno.com/)
+- [Rust](https://www.rust-lang.org/)
+- [protobuf](https://grpc.io/docs/protoc-installation/)
+  - MacOS: `brew install protobuf`
+  - Linux: `sudo apt install -y protobuf-compiler`
+  - Windows:
+    ```powershell
+    choco install protoc
+    choco install openssl
+    ```
+    Then configure the environment variables (yours may differ):
+    - `OPENSSL_DIR`: `C:\Program Files\OpenSSL-Win64`
+    - `OPENSSL_INCLUDE_DIR`: `C:\Program Files\OpenSSL-Win64\include`
+    - `OPENSSL_LIB_DIR`: `C:\Program Files\OpenSSL-Win64\lib`
+- [cmake](https://cmake.org/)
+  - MacOS: `brew install cmake`
+  - Linux: `sudo apt install -y cmake`
 
 ### Setup
 
 ```bash
 git clone https://github.com/kunkunsh/kunkun.git --recursive
-pnpm run setup
 pnpm install
-pnpm --filter @kksh/gql build
+pnpm prepare
 ```
 
 ### Run Desktop App
@@ -34,7 +50,7 @@ cd apps/desktop
 pnpm tauri dev
 ```
 
+## i18n
 
-> [!CAUTION]
-> For some unknown reason, the desktop app may panic when running `pnpm tauri dev` in the first time. If that happens, please try running it again.
-
+If you are willing to help with the translation, please use translations in json files in `apps/desktop/messages`.
+Use `en.json` as a reference.
