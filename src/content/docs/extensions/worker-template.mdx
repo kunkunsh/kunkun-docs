@@ -14,7 +14,6 @@ following pre-defined template, making it easy to develop extension with consist
 Prerequisites:
 
 - Node.js 20+
-- [pnpm](https://pnpm.io/installation#using-corepack)
 - [bun](https://bun.sh/)
   - bun is used to build extension from TypeScript into JavaScript.
 
@@ -56,15 +55,13 @@ Some permissions are just a single string, some are scoped permissions.
 
 ### Start Coding
 
-It is recommended to use pnpm for development because when the extension is built in our CI, it is also built with pnpm.
-
 ```bash
-pnpm install
-pnpm build # build the extension, generate dist/index.js file, this is the entry file of the extension, make sure it's listed in the package.json
-pnpm dev # start the development server, basically running `build` with watch mode
+bun install
+bun run build # build the extension, generate dist/index.js file, this is the entry file of the extension, make sure it's listed in the package.json
+bun dev # start the development server, basically running `build` with watch mode
 ```
 
-In dev mode (`pnpm dev`), every time you save the file, the extension will be recompiled and Kunkun desktop app will be notified to reload the extension.
+In dev mode (`bun dev`), every time you save the file, the extension will be recompiled and Kunkun desktop app will be notified to reload the extension.
 Otherwise you need to manually reload the extension.
 
 A template worker extension should `extends` abstract class `TemplateUiCommand` (https://docs.api.kunkun.sh/classes/ui_worker.TemplateUiCommand)
