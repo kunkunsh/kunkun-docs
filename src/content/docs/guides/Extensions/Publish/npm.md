@@ -2,6 +2,10 @@
 title: With NPM
 ---
 
+<div class="not-content">
+  <iframe class="w-full h-96" src="https://www.youtube.com/embed/tFQAankyBgY" title="Kunkun: Publish Extension through npm" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
 NPM is the most popular package manager for JavaScript.
 
 After developing your extension, you can publish it to JSR by following these steps:

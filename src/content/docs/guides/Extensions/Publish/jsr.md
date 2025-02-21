@@ -2,6 +2,10 @@
 title: With JSR
 ---
 
+<div class="not-content">
+  <iframe class="w-full h-96" src="https://www.youtube.com/embed/wPdWLsbxHpY" title="Kunkun: Publish Extension Through JSR" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
 JSR is a new package registry for the JavaScript ecosystem.
 
 **TLDR**

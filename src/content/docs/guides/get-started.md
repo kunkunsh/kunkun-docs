@@ -7,8 +7,8 @@ sidebar:
 
 **KK** is an open source cross-platform extensible app launcher that aims to be an alternative to Alfred and Raycast. This guide will help you get started with KK both as a user and a developer.
 
-<div style="height: 300px;">
-<iframe width="100%" style="height: 100%;" src="https://www.youtube.com/embed/HfQb38s8VjY" title="Kunkun: open source, cross-platform alternative to Raycast" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<div class="not-content">
+<iframe class="w-full h-96" src="https://www.youtube.com/embed/HfQb38s8VjY" title="Kunkun: open source, cross-platform alternative to Raycast" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 
 ## Installation
@@ -77,10 +77,9 @@ Head over to the [Write Extension](/guides/extensions/write-extension/) or reach
 See [YouTube Playlist](https://www.youtube.com/playlist?list=PLUxw2JoWliioxX3klgGmmaPGISfQlURuv) for more videos.
 :::
 
-<div style="height: 400px">
+<div class="not-content">
   <iframe
-    width="100%"
-    style="height: 100%;"
+    class="w-full h-96"
     src="https://www.youtube.com/embed/NBti-LzDTTI"
     title="Kunkun: Extension Architecture"
     frameborder="0"
@@ -90,6 +89,6 @@ See [YouTube Playlist](https://www.youtube.com/playlist?list=PLUxw2JoWliioxX3klg
   ></iframe>
 </div>
 
-<div style="height: 400px">
-  <iframe width="100%" style="height: 100%;" src="https://www.youtube.com/embed/QPZtUDUGr5s" title="Kunkun: Publish Extension Design" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<div class="not-content">
+  <iframe class="w-full h-96" src="https://www.youtube.com/embed/QPZtUDUGr5s" title="Kunkun: Publish Extension Design" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
