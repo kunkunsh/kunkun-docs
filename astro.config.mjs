@@ -10,7 +10,10 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "Kunkun",
-      lastUpdated: false,
+      lastUpdated: true,
+      editLink: {
+        baseUrl: "https://github.com/kunkunsh/kunkun-docs/edit/main",
+      },
       logo: {
         // src: "./src/assets/kunkun-logo-gray.svg"
         light: "./src/assets/kunkun-logo.svg",
