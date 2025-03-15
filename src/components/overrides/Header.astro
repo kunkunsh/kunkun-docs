@@ -11,6 +11,7 @@ import ThemeSelect from '@astrojs/starlight/components/ThemeSelect.astro';
 import PostHog from "../analytics/posthog.astro";
 import GoogleAnalytics from '../analytics/google-analytics.astro';
 import SyncThemeVue from '@/components/theme/sync-theme.vue'
+import Umami from '../analytics/umami.astro';
 
 const curLocale = Astro.props.locale;
 
@@ -54,6 +55,7 @@ syncThemeClass()
 <head>
 	<PostHog />
 	<GoogleAnalytics />
+	<Umami />
 </head>
 <ThemeObserve />
 <!-- <SyncThemeVue client:only="vue" /> -->
