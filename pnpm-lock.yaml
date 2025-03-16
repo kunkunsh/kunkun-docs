@@ -75,7 +75,7 @@ importers:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
       sharp:
-        specifier: ^0.32.5
+        specifier: ^0.32.6
         version: 0.32.6
       starlight-blog:
         specifier: ^0.18.0
