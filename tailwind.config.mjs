@@ -7,6 +7,7 @@ export default {
     "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}",
     "node_modules/@kksh/vue/dist/**/*.{js,jsx,svelte,ts,tsx,vue,css}",
     "node_modules/@kksh/react/dist/**/*.{js,jsx,svelte,ts,tsx,vue,css}",
+    "node_modules/@kksh/svelte5/dist/**/*.{js,jsx,svelte,ts,tsx,vue,css}",
   ],
   theme: {
     container: {
@@ -51,8 +52,6 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        accent: colors.indigo,
-        // Your preferred gray scale. Zinc is closest to Starlight’s defaults.
         gray: colors.black,
       },
       borderRadius: {
@@ -85,6 +84,7 @@ export default {
         "collapsible-down": "collapsible-down 0.2s ease-in-out",
         "collapsible-up": "collapsible-up 0.2s ease-in-out",
       },
+      fontFamily: {},
     },
   },
   plugins: [starlightPlugin()],

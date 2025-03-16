@@ -1,0 +1,45 @@
+.tab:where(.astro-idhda7hb)
+  > :where(.astro-idhda7hb)[role="tab"][aria-selected="true"] {
+  border: none;
+  border-bottom: 2px solid var(--sl-color-text-accent);
+}
+
+.astro-mnxhxt2k {
+  /* background-color: #000; */
+}
+
+/* Customize scrollbar for the sidebar */
+
+#starlight__sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+#starlight__sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#starlight__sidebar::-webkit-scrollbar-thumb {
+  background: var(--sl-color-gray-5);
+  border-radius: 4px;
+}
+
+#starlight__sidebar::-webkit-scrollbar-thumb:hover {
+  background: var(--sl-color-gray-4);
+}
+/* Customize scrollbar for the entire page */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sl-color-gray-5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sl-color-gray-4);
+}

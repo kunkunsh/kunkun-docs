@@ -4,16 +4,15 @@ draft: true
 ---
 
 ```ts
-import { ui } from "@kksh/api/ui/custom"
+import { ui } from "@kksh/api/ui/custom";
 
-import { updateTheme } from "@kksh/vue"
+import { updateTheme } from "@kksh/vue";
 // or
-import { updateTheme } from "@kksh/react"
+import { updateTheme } from "@kksh/react";
 // or
-import { updateTheme } from "@kksh/svelte"
-
+import { updateTheme } from "@kksh/svelte5";
 
 ui.getTheme().then((theme) => {
-	updateTheme(theme)
-})
+  updateTheme(theme);
+});
 ```

@@ -1,5 +1,6 @@
 ---
 title: "Creation of Kunkun"
+date: 2025-03-16
 ---
 
 > Why did I create Kunkun?

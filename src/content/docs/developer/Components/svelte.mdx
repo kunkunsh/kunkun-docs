@@ -2,26 +2,29 @@
 title: Svelte
 ---
 
-import { Code } from '@astrojs/starlight/components';
+import { Code } from "@astrojs/starlight/components";
 import SvelteCmdDemo from "@/components/demo/svelte/command.svelte";
-import { Button } from '@kksh/svelte';
-import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Button } from "@kksh/svelte5";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
 
-**NPM Package (svelte 4):** `@kksh/svelte` ![NPM Version](https://img.shields.io/npm/v/%40kksh%2Fsvelte)
+<div class="not-content bg-popover h-12 w-12">
+
+</div>
+
+**NPM Package (svelte 4):** `@kksh/svelte5` ![NPM Version](https://img.shields.io/npm/v/%40kksh%2Fsvelte)
 
 As svelte 5 is released in 2024, we have released a new package `@kksh/svelte5` for svelte 5.
 **NPM Package (svelte 5):** `@kksh/svelte5` ![NPM Version](https://img.shields.io/npm/v/%40kksh%2Fsvelte5)
 
 **Original Shadcn Svelte:** https://www.shadcn-svelte.com/
 
-Normally, Shadcn components are imported from local `@/components/ui` directory. 
+Normally, Shadcn components are imported from local `@/components/ui` directory.
 
-Now you can import the components from `@kksh/svelte` package.
+Now you can import the components from `@kksh/svelte5` package.
 
-Most of Shadcn components are exported from `@kksh/svelte` package.
+Most of Shadcn components are exported from `@kksh/svelte5` package.
 
 ## Component Examples
-
 
 ### Button Example
 
@@ -40,14 +43,12 @@ Most of Shadcn components are exported from `@kksh/svelte` package.
 <Button>Hello Kunkun!</Button>
 ```
 
-		</TabItem>
-	</Tabs>
+    	</TabItem>
+    </Tabs>
 
 </div>
 
 ### Command Palette Example
-
-
 
 <div class="not-content">
 	<Tabs>
@@ -65,7 +66,8 @@ Most of Shadcn components are exported from `@kksh/svelte` package.
 	import Person from "svelte-radix/Person.svelte";
 	import Rocket from "svelte-radix/Rocket.svelte";
 
-	import { Command } from "@kksh/svelte5";
+    import { Command } from "@kksh/svelte5";
+
 </script>
 
 <Command.Root class="max-w-[450px] rounded-lg border shadow-md">
@@ -112,7 +114,6 @@ Most of Shadcn components are exported from `@kksh/svelte` package.
 
 </div>
 
-
 ## Theme
 
 You can get KK's color theme and set your extension theme to match KK's theme.
@@ -141,5 +142,5 @@ You can get KK's color theme and set your extension theme to match KK's theme.
 For color theme to take effect, you need to import the theme styles from `@kksh/vue/themes`.
 
 ```css title="styles.css"
-@import url("@kksh/svelte/themes");
+@import url("@kksh/svelte5/themes");
 ```

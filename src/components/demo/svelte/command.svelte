@@ -6,7 +6,7 @@
   import Person from "svelte-radix/Person.svelte";
   import Rocket from "svelte-radix/Rocket.svelte";
 
-  import { Command } from "@kksh/svelte";
+  import { Command } from "@kksh/svelte5";
 </script>
 
 <Command.Root class="max-w-[450px] rounded-lg border shadow-md">

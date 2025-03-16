@@ -54,3 +54,4 @@ pnpm tauri dev
 
 If you are willing to help with the translation, please use translations in json files in `apps/desktop/messages`.
 Use `en.json` as a reference.
+

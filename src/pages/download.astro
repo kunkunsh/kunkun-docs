@@ -1,23 +1,24 @@
 ---
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro"
-import DownloadPage from '../components/download-page.svelte'
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import DownloadPage from "@/components/download-page.svelte";
+// import DownloadPage from "@/components/download-page.svelte";
 
-const res = await fetch("https://updater.kunkun.sh")
+const res = await fetch("https://updater.kunkun.sh");
 type UpdaterData = {
-	version: string
-	notes: string
-	pub_date: string
-	platforms: Record<
-		string,
-		{
-			signature: string
-			url: string
-		}
-	>
-}
-const data: UpdaterData = await res.json()
-const version = data.version
-const downloadProxyBaseUrl = `https://github.com/kunkunsh/kunkun/releases/download/Kunkun-v${version}`
+  version: string;
+  notes: string;
+  pub_date: string;
+  platforms: Record<
+    string,
+    {
+      signature: string;
+      url: string;
+    }
+  >;
+};
+const data: UpdaterData = await res.json();
+const version = data.version;
+const downloadProxyBaseUrl = `https://github.com/kunkunsh/kunkun/releases/download/Kunkun-v${version}`;
 // const downloadProxyBaseUrl = `https://download.kunkun.sh/Kunkun-v${version}`
 
 const downloadUrlMap = {
@@ -34,22 +35,31 @@ const downloadUrlMap = {
   darwin_universal_app: `${downloadProxyBaseUrl}/Kunkun_universal.app.tar.gz`,
   darwin_x64_dmg: `${downloadProxyBaseUrl}/Kunkun_${version}_x64.dmg`,
   darwin_x64_app: `${downloadProxyBaseUrl}/Kunkun_x64.app.tar.gz`,
-}
-const downloadUrls = Object.values(downloadUrlMap)
-const downloadUrlKeys = Object.keys(downloadUrlMap)
+};
+const downloadUrls = Object.values(downloadUrlMap);
+const downloadUrlKeys = Object.keys(downloadUrlMap);
 const headFetchRes = await Promise.all(
-  downloadUrls.map((url) => fetch(url, { method: "HEAD" }).then((res) => res.ok))
-)
-const failedLinks = headFetchRes.map((valid, idx) => valid ? null : downloadUrls[idx]).filter(x => x!== null)
-const failedLinkKeys = headFetchRes.map((valid, idx) => valid ? null : downloadUrlKeys[idx]).filter(x => x!== null)
+  downloadUrls.map((url) =>
+    fetch(url, { method: "HEAD" }).then((res) => res.ok)
+  )
+);
+const failedLinks = headFetchRes
+  .map((valid, idx) => (valid ? null : downloadUrls[idx]))
+  .filter((x) => x !== null);
+const failedLinkKeys = headFetchRes
+  .map((valid, idx) => (valid ? null : downloadUrlKeys[idx]))
+  .filter((x) => x !== null);
 function isValid(platformKey: string) {
-  return !failedLinkKeys.includes(platformKey)
+  return !failedLinkKeys.includes(platformKey);
 }
 // replace github url with proxy url
 Object.entries(downloadUrlMap).forEach(([key, value], idx) => {
   // @ts-ignore
-  downloadUrlMap[key] = value.replace('https://github.com/kunkunsh/kunkun/releases/download/', 'https://download.kunkun.sh/')
-})
+  downloadUrlMap[key] = value.replace(
+    "https://github.com/kunkunsh/kunkun/releases/download/",
+    "https://download.kunkun.sh/"
+  );
+});
 ---
 
 <StarlightPage frontmatter={{ title: "Download" }} hasSidebar={false}>

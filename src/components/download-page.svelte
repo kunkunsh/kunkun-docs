@@ -1,83 +1,85 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+import { onMount } from "svelte";
 
-  type UpdaterData = {
-    version: string;
-    notes: string;
-    pub_date: string;
-    platforms: Record<
-      string,
-      {
-        signature: string;
-        url: string;
-      }
-    >;
-  };
+type UpdaterData = {
+	version: string;
+	notes: string;
+	pub_date: string;
+	platforms: Record<
+		string,
+		{
+			signature: string;
+			url: string;
+		}
+	>;
+};
 
-  let data: UpdaterData;
-  let failedLinks: string[] = [];
-  let failedLinkKeys: string[] = [];
-  let downloadUrlMap: Record<string, string> = {};
+let data: UpdaterData;
+let failedLinks: string[] = [];
+let failedLinkKeys: string[] = [];
+let downloadUrlMap: Record<string, string> = {};
 
-  async function fetchData() {
-    const res = await fetch("https://updater.kunkun.sh");
-    data = await res.json();
-    const version = data.version;
-    const downloadProxyBaseUrl = `https://github.com/kunkunsh/kunkun/releases/download/Kunkun-v${version}`;
+async function fetchData() {
+	const res = await fetch("https://updater.kunkun.sh");
+	data = await res.json();
+	const version = data.version;
+	const downloadProxyBaseUrl = `https://github.com/kunkunsh/kunkun/releases/download/Kunkun-v${version}`;
 
-    downloadUrlMap = {
-      /* ---------------------------------- Linux --------------------------------- */
-      linux_x86_64_rpm: `${downloadProxyBaseUrl}/Kunkun-${version}-1.x86_64.rpm`,
-      linux_x86_64_deb: `${downloadProxyBaseUrl}/Kunkun_${version}_amd64.deb`,
-      /* --------------------------------- Windows -------------------------------- */
-      windows_x64_exe: `${downloadProxyBaseUrl}/Kunkun_${version}_x64-setup.exe`,
-      windows_x64_msi: `${downloadProxyBaseUrl}/Kunkun_${version}_x64_en-US.msi`,
-      /* ---------------------------------- MacOS --------------------------------- */
-      darwin_aarch64_dmg: `${downloadProxyBaseUrl}/Kunkun_${version}_aarch64.dmg`,
-      darwin_aarch64_app: `${downloadProxyBaseUrl}/Kunkun_aarch64.app.tar.gz`,
-      darwin_universal_dmg: `${downloadProxyBaseUrl}/Kunkun_${version}_universal.dmg`,
-      darwin_universal_app: `${downloadProxyBaseUrl}/Kunkun_universal.app.tar.gz`,
-      darwin_x64_dmg: `${downloadProxyBaseUrl}/Kunkun_${version}_x64.dmg`,
-      darwin_x64_app: `${downloadProxyBaseUrl}/Kunkun_x64.app.tar.gz`,
-    };
+	downloadUrlMap = {
+		/* ---------------------------------- Linux --------------------------------- */
+		linux_x86_64_rpm: `${downloadProxyBaseUrl}/Kunkun-${version}-1.x86_64.rpm`,
+		linux_x86_64_deb: `${downloadProxyBaseUrl}/Kunkun_${version}_amd64.deb`,
+		/* --------------------------------- Windows -------------------------------- */
+		windows_x64_exe: `${downloadProxyBaseUrl}/Kunkun_${version}_x64-setup.exe`,
+		windows_x64_msi: `${downloadProxyBaseUrl}/Kunkun_${version}_x64_en-US.msi`,
+		/* ---------------------------------- MacOS --------------------------------- */
+		darwin_aarch64_dmg: `${downloadProxyBaseUrl}/Kunkun_${version}_aarch64.dmg`,
+		darwin_aarch64_app: `${downloadProxyBaseUrl}/Kunkun_aarch64.app.tar.gz`,
+		darwin_universal_dmg: `${downloadProxyBaseUrl}/Kunkun_${version}_universal.dmg`,
+		darwin_universal_app: `${downloadProxyBaseUrl}/Kunkun_universal.app.tar.gz`,
+		darwin_x64_dmg: `${downloadProxyBaseUrl}/Kunkun_${version}_x64.dmg`,
+		darwin_x64_app: `${downloadProxyBaseUrl}/Kunkun_x64.app.tar.gz`,
+	};
 
-    const downloadUrls = Object.values(downloadUrlMap);
-    const downloadUrlKeys = Object.keys(downloadUrlMap);
-    
-    const headFetchRes = await Promise.all(
-      downloadUrls.map((url) => fetch(url, { method: "HEAD" }).then((res) => res.ok))
-    );
-    
-    failedLinks = headFetchRes
-      .map((valid, idx) => valid ? null : downloadUrls[idx])
-      .filter((x): x is string => x !== null);
-      
-    failedLinkKeys = headFetchRes
-      .map((valid, idx) => valid ? null : downloadUrlKeys[idx])
-      .filter((x): x is string => x !== null);
+	const downloadUrls = Object.values(downloadUrlMap);
+	const downloadUrlKeys = Object.keys(downloadUrlMap);
 
-    // replace github url with proxy url
-    Object.entries(downloadUrlMap).forEach(([key, value]) => {
-      downloadUrlMap[key] = value.replace(
-        'https://github.com/kunkunsh/kunkun/releases/download/',
-        'https://download.kunkun.sh/'
-      );
-    });
-  }
+	const headFetchRes = await Promise.all(
+		downloadUrls.map((url) =>
+			fetch(url, { method: "HEAD" }).then((res) => res.ok),
+		),
+	);
 
-  function isValid(platformKey: string) {
-    return !failedLinkKeys.includes(platformKey);
-  }
+	failedLinks = headFetchRes
+		.map((valid, idx) => (valid ? null : downloadUrls[idx]))
+		.filter((x): x is string => x !== null);
 
-  onMount(() => {
-    fetchData();
-  });
+	failedLinkKeys = headFetchRes
+		.map((valid, idx) => (valid ? null : downloadUrlKeys[idx]))
+		.filter((x): x is string => x !== null);
+
+	// replace github url with proxy url
+	for (const [key, value] of Object.entries(downloadUrlMap)) {
+		downloadUrlMap[key] = value.replace(
+			"https://github.com/kunkunsh/kunkun/releases/download/",
+			"https://download.kunkun.sh/",
+		);
+	}
+}
+
+function isValid(platformKey: string) {
+	return !failedLinkKeys.includes(platformKey);
+}
+
+onMount(() => {
+	fetchData();
+});
 </script>
 
 {#if data}
   <div>
-    <a class="block" target="_blank" href="https://github.com/kunkunsh/kunkun/releases">Download from GitHub Release</a>
-    <a class="block" target="_blank" href="https://kunkun.sh/download">Download from Main Website</a>
+    <div><a class="" target="_blank" href="https://github.com/kunkunsh/kunkun/releases">Download from GitHub Release</a></div>
+    <div><a class="" target="_blank" href="https://kunkun.sh/download">Download from Main Website</a></div>
 
     <p><strong>Current Version:</strong>{data.version}</p>
     <p>The following download links are proxies to GitHub release files, they could be useful if you cannot access GitHub smoothly.</p>
