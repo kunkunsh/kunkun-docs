@@ -1,11 +1,6 @@
-.tab:where(.astro-idhda7hb)
-  > :where(.astro-idhda7hb)[role="tab"][aria-selected="true"] {
+.tab > [role="tab"][aria-selected="true"] {
   border: none;
   border-bottom: 2px solid var(--sl-color-text-accent);
-}
-
-.astro-mnxhxt2k {
-  /* background-color: #000; */
 }
 
 /* Customize scrollbar for the sidebar */
