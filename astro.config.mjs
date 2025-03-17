@@ -67,7 +67,7 @@ export default defineConfig({
           tag: "script",
           attrs: {
             src: "https://umami.huakunshen.com/script.js",
-            "data-website-id": "c20c027b-285c-4724-9146-f2cf797b22a0",
+            "data-website-id": "b2895b0d-1327-4f4c-a23d-80be2fab9da7",
             defer: true,
           },
         },
