@@ -30,6 +30,8 @@ export default defineConfig({
         github: "https://github.com/kunkunsh/kunkun",
         discord: "https://discord.gg/7dzw3TYeTU",
         youtube: "https://www.youtube.com/@huakun",
+        blueSky: "https://bsky.app/profile/kunkun.sh",
+        "x.com": "https://x.com/kunkun_app",
       },
       plugins: [
         // starlightBlog(),
