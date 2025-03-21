@@ -34,13 +34,33 @@ export default defineConfig({
       },
       plugins: [
         // starlightBlog(),
-        starlightHeadingBadges(),
+        // starlightHeadingBadges(),
         starlightImageZoom(),
-        starlightUtils({
-          multiSidebar: {
-            switcherStyle: "horizontalList",
+        starlightSidebarTopics([
+          {
+            label: "Guides",
+            link: "/guides/get-started",
+            items: [
+              { label: "Intro", autogenerate: { directory: "guides" } },
+            ],
           },
-        }),
+          {
+            label: "Developer",
+            link: "/developer",
+            items: [
+              { label: "API", autogenerate: { directory: "developer/API" } },
+              // {
+              //   label: "Components",
+              //   autogenerate: { directory: "developer/Components" },
+              // },
+            ],
+          },
+        ]),
+        // starlightUtils({
+        //   multiSidebar: {
+        //     switcherStyle: "horizontalList",
+        //   },
+        // }),
       ],
       components: {
         MarkdownContent: "./src/components/overrides/MarkdownContent.astro",
@@ -103,54 +123,54 @@ export default defineConfig({
           `,
         },
       ],
-      sidebar: [
-        {
-          label: "Guides",
-          items: [
-            {
-              label: "Guides",
-              autogenerate: {
-                directory: "guides",
-              },
-            },
-            {
-              label: "Milestones",
-              autogenerate: {
-                directory: "milestones",
-              },
-              collapsed: true,
-            },
-            {
-              label: "Extensions",
-              autogenerate: {
-                directory: "extensions",
-              },
-              collapsed: false,
-            },
-            {
-              label: "Developer",
-              autogenerate: {
-                directory: "developer",
-              },
-              collapsed: false,
-            },
-            {
-              label: "Reference",
-              autogenerate: {
-                directory: "reference",
-              },
-              collapsed: false,
-            },
-          ],
-        },
-        {
-          label: "Blog",
-          autogenerate: {
-            directory: "blog",
-          },
-          collapsed: false,
-        },
-      ],
+      // sidebar: [
+      //   {
+      //     label: "Guides",
+      //     items: [
+      //       {
+      //         label: "Guides",
+      //         autogenerate: {
+      //           directory: "guides",
+      //         },
+      //       },
+      //       {
+      //         label: "Milestones",
+      //         autogenerate: {
+      //           directory: "milestones",
+      //         },
+      //         collapsed: true,
+      //       },
+      //       {
+      //         label: "Extensions",
+      //         autogenerate: {
+      //           directory: "extensions",
+      //         },
+      //         collapsed: false,
+      //       },
+      //       {
+      //         label: "Developer",
+      //         autogenerate: {
+      //           directory: "developer",
+      //         },
+      //         collapsed: false,
+      //       },
+      //       {
+      //         label: "Reference",
+      //         autogenerate: {
+      //           directory: "reference",
+      //         },
+      //         collapsed: false,
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     label: "Blog",
+      //     autogenerate: {
+      //       directory: "blog",
+      //     },
+      //     collapsed: false,
+      //   },
+      // ],
       customCss: ["./src/tailwind.css", "./src/app.css"],
     }),
     tailwind({ applyBaseStyles: true }),
