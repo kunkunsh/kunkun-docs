@@ -23,7 +23,6 @@ export default defineConfig({
       },
       lastUpdated: true,
       logo: {
-        // src: "./src/assets/kunkun-logo-gray.svg"
         light: "./src/assets/kunkun-logo.svg",
         dark: "./src/assets/kunkun-logo-inverted.svg",
       },
@@ -34,33 +33,68 @@ export default defineConfig({
       },
       plugins: [
         // starlightBlog(),
-        // starlightHeadingBadges(),
+        starlightHeadingBadges(),
         starlightImageZoom(),
         starlightSidebarTopics([
           {
-            label: "Guides",
+            label: "Documentation",
+            icon: "open-book",
             link: "/guides/get-started",
             items: [
-              { label: "Intro", autogenerate: { directory: "guides" } },
+              {
+                label: "Guides",
+                autogenerate: {
+                  directory: "guides",
+                },
+              },
+              {
+                label: "Milestones",
+                autogenerate: {
+                  directory: "milestones",
+                },
+                collapsed: true,
+              },
+              {
+                label: "Extensions",
+                autogenerate: {
+                  directory: "extensions",
+                },
+                collapsed: false,
+              },
+              {
+                label: "Developer",
+                autogenerate: {
+                  directory: "developer",
+                },
+                collapsed: false,
+              },
+              {
+                label: "Reference",
+                autogenerate: {
+                  directory: "reference",
+                },
+                collapsed: false,
+              },
             ],
           },
           {
-            label: "Developer",
-            link: "/developer",
+            label: "Tutorials",
+            link: "/tutorials/intro/",
+            icon: "laptop",
             items: [
-              { label: "API", autogenerate: { directory: "developer/API" } },
-              // {
-              //   label: "Components",
-              //   autogenerate: { directory: "developer/Components" },
-              // },
+              {
+                label: "Tutorials",
+                autogenerate: { directory: "tutorials" },
+              },
             ],
           },
+          {
+            label: "Blogs",
+            link: "/blog/creation",
+            icon: "pen",
+            items: [{ label: "Blog", autogenerate: { directory: "blog" } }],
+          },
         ]),
-        // starlightUtils({
-        //   multiSidebar: {
-        //     switcherStyle: "horizontalList",
-        //   },
-        // }),
       ],
       components: {
         MarkdownContent: "./src/components/overrides/MarkdownContent.astro",
@@ -123,54 +157,6 @@ export default defineConfig({
           `,
         },
       ],
-      // sidebar: [
-      //   {
-      //     label: "Guides",
-      //     items: [
-      //       {
-      //         label: "Guides",
-      //         autogenerate: {
-      //           directory: "guides",
-      //         },
-      //       },
-      //       {
-      //         label: "Milestones",
-      //         autogenerate: {
-      //           directory: "milestones",
-      //         },
-      //         collapsed: true,
-      //       },
-      //       {
-      //         label: "Extensions",
-      //         autogenerate: {
-      //           directory: "extensions",
-      //         },
-      //         collapsed: false,
-      //       },
-      //       {
-      //         label: "Developer",
-      //         autogenerate: {
-      //           directory: "developer",
-      //         },
-      //         collapsed: false,
-      //       },
-      //       {
-      //         label: "Reference",
-      //         autogenerate: {
-      //           directory: "reference",
-      //         },
-      //         collapsed: false,
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     label: "Blog",
-      //     autogenerate: {
-      //       directory: "blog",
-      //     },
-      //     collapsed: false,
-      //   },
-      // ],
       customCss: ["./src/tailwind.css", "./src/app.css"],
     }),
     tailwind({ applyBaseStyles: true }),
