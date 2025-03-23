@@ -21,7 +21,6 @@ const googleAnalyticsId = "G-0CV6E8FN6E";
 export default defineConfig({
   integrations: [
     starlight({
-      title: "Kunkun",
       editLink: {
         baseUrl: "https://github.com/kunkunsh/kunkun-docs/edit/main",
       },
@@ -38,7 +37,6 @@ export default defineConfig({
         "x.com": "https://x.com/kunkun_app",
       },
       plugins: [
-        // pluginLineNumbers(), // this is not working, waiting for update https://github.com/expressive-code/expressive-code/issues/315
         // starlightBlog(),
         starlightGiscus({
           repo: "kunkunsh/kunkun-docs",
@@ -238,7 +236,6 @@ export default defineConfig({
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-
           gtag('config', '${googleAnalyticsId}');
           `,
         },
@@ -259,6 +256,7 @@ export default defineConfig({
         },
       ],
       customCss: ["./src/tailwind.css", "./src/app.css"],
+      title: "Kunkun",
     }),
     tailwind({ applyBaseStyles: true }),
     svelte(),
