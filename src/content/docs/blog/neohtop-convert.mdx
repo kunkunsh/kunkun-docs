@@ -1,0 +1,143 @@
+---
+title: "Convert neohtop to Extension"
+date: 2025-03-22
+---
+
+[neohtop](https://github.com/Abdenasser/neohtop) is a beautiful desktop version of the htop command.
+
+> A modern, cross-platform system monitor built on top of Svelte, Rust, and Tauri.
+
+In this blog, I will talk about how I converted neohtop to an extension.
+
+It maybe simpler than you think.
+
+## TC;SC
+
+- A demo PR: https://github.com/kunkunsh/kunkun-ext-neohtop/pull/1/files
+- The extension: https://kunkun.sh/store/neohtop
+- The repo: https://github.com/kunkunsh/kunkun-ext-neohtop
+
+Here is a screenshot of the extension, exactly the same as the desktop version.
+
+![](https://imgur.com/D8VHDEz.png)
+
+## Intro
+
+[neohtop](https://github.com/Abdenasser/neohtop) is a Tauri app. It's frontend is built with Svelte, and backend is built with Rust.
+
+> One of the reasons I created kunkun is to make it easy to write cross-platform apps and distribute them on different platforms.
+> 
+> And neohtop is a perfect example for this.
+
+It's a nice GUI wrapper over the [`sysinfo`](https://crates.io/crates/sysinfo) crate.
+See its [Cargo.toml](https://github.com/Abdenasser/neohtop/blob/8269d6f95a41df5fd31b175f26113b1692b6163c/src-tauri/Cargo.toml#L15).
+
+Luckily, Kunkun's extension API also provides a `sysInfo` API, see [docs](/developer/api/sysinfo/).
+It is based on [tauri-plugin-system-info](https://github.com/HuakunShen/tauri-plugin-system-info), which is also a wrapper over the [`sysinfo`](https://crates.io/crates/sysinfo) crate. See [Cargo.toml](https://github.com/HuakunShen/tauri-plugin-system-info/blob/cb32fe842b8ba9a893a2aa4d6850b9a81516e7aa/Cargo.toml#L21).
+
+Since the data source are the same, then it should be straightforward to convert it to an extension.
+
+I set a 30 minutes goal for myself, but it took me 90 minutes to complete the conversion.
+This is because `neohtop` did its data aggregation and preprocessing in rust, and I need to convert the logic to TypeScript.
+Kind of like how TypeScript is converted to Golang, I just needed to convert the rust code to TypeScript, not hard at all, just time-consuming.
+
+## Code
+
+In this [PR](https://github.com/kunkunsh/kunkun-ext-neohtop/pull/1/files), I demonstrated all the changes I made for the conversion.
+
+First of all, neohtop is written in frontend framework svelte, so obviously this is a custom UI extension.
+
+### Manifest
+
+[`package.json`](https://github.com/kunkunsh/kunkun-ext-neohtop/pull/1/files#diff-7ae45ad102eab3b6d7e7896acd08c427a9b25b346470d7bc6507b6481575d519)
+
+```json title="package.json" showLineNumbers {10-11} {20-22}
+"kunkun": {
+    "name": "neohtop",
+    "shortDescription": "A modern, cross-platform system monitor",
+    "longDescription": "A modern, cross-platform system monitor",
+    "identifier": "neohtop",
+    "demoImages": [
+        "https://imgur.com/D8VHDEz.png"
+    ],
+    "permissions": [
+        "system-info:all",
+        "shell:kill-any"
+    ],
+    "icon": {
+        "type": "remote-url",
+        "value": "https://github.com/Abdenasser/neohtop/raw/main/app-icon.png"
+    },
+    "customUiCmds": [
+        {
+            "name": "neohtop",
+            "main": "/",
+            "dist": "build",
+            "devMain": "http://localhost:1420",
+            "cmds": [],
+            "window": {
+                "title": "Neohtop",
+                "hiddenTitle": true,
+                "titleBarStyle": "overlay",
+                "width": 1400,
+                "height": 1000
+            }
+        }
+    ]
+},
+```
+
+- `build` folder is the default output folder of svelte projects, thus `dist` is set to `build`.
+- `devMain` is the local server that serves the svelte project, it is used when developing the extension with HMR.
+- `system-info:all` permission is required to access the system info data.
+- `shell:kill-any` permission is required to kill any process by a `pid`.
+
+### Frontend
+
+neohtop has no default window title bar, but users can drag the window by clicking on the top of the app.
+This is achieved by simply including `data-tauri-drag-region` in a `div` element.
+
+```html
+<div class="title-bar" data-tauri-drag-region></div>
+```
+
+In a KK extension, we use `data-kunkun-drag-region` instead, just remember to call `ui.registerDragRegion` in app initialization.
+
+import { Code } from "@astrojs/starlight/components";
+
+export const exampleCode = `console.log('This could come from a file or CMS!');`;
+export const fileName = "example.js";
+export const highlights = ["file", "CMS"];
+
+{/* <Code code={exampleCode} lang="js" title={fileName} mark={highlights} /> */}
+
+```diff lang="svelte" title="TitleBar.svelte"
+- <div class="title-bar" data-tauri-drag-region>
++ <div class="title-bar" data-kunkun-drag-region>
+```
+
+```diff lang="ts" title="+page.svelte"
++ import { ui } from "@kksh/api/ui/custom";
++ onMount(() => {
++   ui.registerDragRegion("kunkun");
++ });
+```
+
+- [TitleBar.svelte](https://github.com/kunkunsh/kunkun-ext-neohtop/pull/1/files#diff-5b930dbf5fac4f54096c3e2bc4e0a320b89a6010da94963ce000193b929e29a5)
+- [+page.svelte](https://github.com/kunkunsh/kunkun-ext-neohtop/pull/1/files#diff-1e1270da740e81dd13f8a65057582b0fce8a5fb3817ef913f3e90d7f82c4e9dfR76)
+
+### Data Preprocessing/Aggregation
+
+> This is the most time-consuming part.
+
+The source system info data is preprocessed before rendering.
+The preprocessing logic is written in Rust, thus I need to convert them to TypeScript.
+
+| neohtop (Rust)                                                                                                                                            | kunkun-ext-neohtop (TypeScript)                                                                                                                        |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [process_monitor.rs](https://github.com/Abdenasser/neohtop/blob/8269d6f95a41df5fd31b175f26113b1692b6163c/src-tauri/src/monitoring/process_monitor.rs#L19) | [processMonitor.ts](https://github.com/kunkunsh/kunkun-ext-neohtop/pull/1/files#diff-875f3104224e0084f31fd16597f39627b5bb41359aaa82ae34d408e90cd708d7) |
+| [system_monitor.rs](https://github.com/Abdenasser/neohtop/blob/8269d6f95a41df5fd31b175f26113b1692b6163c/src-tauri/src/monitoring/system_monitor.rs#L19)   | [systemMonitor.ts](https://github.com/kunkunsh/kunkun-ext-neohtop/pull/1/files#diff-e49245b092e4c4cac8ce0c2f7754bdc520c6bd16a1f8a1c1633554c86192ca95)  |
+
+## Acknowledgements
+
+- [Abdenasser](https://github.com/Abdenasser) for the awesome [neohtop](https://github.com/Abdenasser/neohtop)

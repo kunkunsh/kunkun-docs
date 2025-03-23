@@ -2,6 +2,7 @@
 import { defineConfig, passthroughImageService } from "astro/config";
 import starlight from "@astrojs/starlight";
 import tailwind from "@astrojs/tailwind";
+import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import starlightBlog from "starlight-blog";
 import starlightHeadingBadges from "starlight-heading-badges";
 import starlightSidebarTopics from "starlight-sidebar-topics";
@@ -36,6 +37,7 @@ export default defineConfig({
         "x.com": "https://x.com/kunkun_app",
       },
       plugins: [
+        // pluginLineNumbers(), // this is not working, waiting for update https://github.com/expressive-code/expressive-code/issues/315
         // starlightBlog(),
         starlightSiteGraph({
           graphConfig: {
