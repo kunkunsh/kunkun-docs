@@ -83,6 +83,9 @@ importers:
       starlight-blog:
         specifier: ^0.18.0
         version: 0.18.0(@astrojs/starlight@0.32.4(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)))(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))
+      starlight-giscus:
+        specifier: ^0.5.1
+        version: 0.5.1(@astrojs/starlight@0.32.4(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)))
       starlight-heading-badges:
         specifier: ^0.5.0
         version: 0.5.0(@astrojs/starlight@0.32.4(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)))
@@ -4742,6 +4745,12 @@ packages:
     engines: {node: '>=18.17.1'}
     peerDependencies:
       '@astrojs/starlight': '>=0.32.0'
+
+  starlight-giscus@0.5.1:
+    resolution: {integrity: sha512-cmDHvP4V+lhAvwyI/cC4WXZy3N1i7q1w1yVw8XOjD2pjCC7Ds3iozdapV0WtGY6iDpE7Rby7sSxoWqoSsug0Ow==}
+    engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
+    peerDependencies:
+      '@astrojs/starlight': '>=0.32'
 
   starlight-heading-badges@0.5.0:
     resolution: {integrity: sha512-B2acUppMY2seU8ab5wHTDlRo1zDkTAPBDtLMPq+5o01k5INmN5OlFsHwpSBvdqEf2fomUA7KcvnrRrUL3InNsQ==}
@@ -11224,6 +11233,10 @@ snapshots:
     transitivePeerDependencies:
       - astro
       - supports-color
+
+  starlight-giscus@0.5.1(@astrojs/starlight@0.32.4(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))):
+    dependencies:
+      '@astrojs/starlight': 0.32.4(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))
 
   starlight-heading-badges@0.5.0(@astrojs/starlight@0.32.4(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))):
     dependencies:

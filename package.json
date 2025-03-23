@@ -35,6 +35,7 @@
 		"react-dom": "^19.0.0",
 		"sharp": "^0.32.6",
 		"starlight-blog": "^0.18.0",
+		"starlight-giscus": "^0.5.1",
 		"starlight-heading-badges": "^0.5.0",
 		"starlight-image-zoom": "^0.11.1",
 		"starlight-sidebar-topics": "^0.5.1",

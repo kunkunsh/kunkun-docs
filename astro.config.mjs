@@ -13,6 +13,7 @@ import react from "@astrojs/react";
 import vue from "@astrojs/vue";
 import starlightSiteGraph from "starlight-site-graph";
 import starlightThemeObsidian from "starlight-theme-obsidian";
+import starlightGiscus from "starlight-giscus";
 
 const googleAnalyticsId = "G-0CV6E8FN6E";
 
@@ -39,6 +40,12 @@ export default defineConfig({
       plugins: [
         // pluginLineNumbers(), // this is not working, waiting for update https://github.com/expressive-code/expressive-code/issues/315
         // starlightBlog(),
+        starlightGiscus({
+          repo: "kunkunsh/kunkun-docs",
+          repoId: "R_kgDONmzGvg",
+          category: "Docs Comment",
+          categoryId: "DIC_kwDONmzGvs4CoXec",
+        }),
         starlightSiteGraph({
           graphConfig: {
             depth: 1,
