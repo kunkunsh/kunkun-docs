@@ -105,8 +105,8 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0(@astrojs/starlight@0.32.4(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)))
       starlight-theme-obsidian:
-        specifier: ^0.2.0
-        version: 0.2.0(@astrojs/starlight@0.32.4(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)))(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))(starlight-site-graph@0.3.0(@astrojs/starlight@0.32.4(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)))(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)))
+        specifier: ^0.2.2
+        version: 0.2.2(@astrojs/starlight@0.32.4(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)))(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))(starlight-site-graph@0.3.0(@astrojs/starlight@0.32.4(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)))(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)))
       svelte:
         specifier: ^5.23.0
         version: 5.23.0
@@ -4841,8 +4841,8 @@ packages:
     peerDependencies:
       '@astrojs/starlight': '>=0.30.0'
 
-  starlight-theme-obsidian@0.2.0:
-    resolution: {integrity: sha512-QPdA3cUPsN5msyxmiepa+rjhTeb5nkgfyfJjws5RDFCOqhB5DfWsK2HqD6WReJ4XJ2xy9+W/1oGC5jvKZUZttQ==}
+  starlight-theme-obsidian@0.2.2:
+    resolution: {integrity: sha512-XUEUyfe1unSgJBwWEIcoNpsBynAFe9g+Z5AaC1sq+oDSIL1O/lqUAr16ef1W5N5ZYjty0kdzC/vjR/QGwvvHUg==}
     peerDependencies:
       '@astrojs/starlight': ^0.32.3
       astro: ^5.5.3
@@ -11410,7 +11410,7 @@ snapshots:
       '@pagefind/default-ui': 1.3.0
       marked: 15.0.7
 
-  starlight-theme-obsidian@0.2.0(@astrojs/starlight@0.32.4(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)))(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))(starlight-site-graph@0.3.0(@astrojs/starlight@0.32.4(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)))(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))):
+  starlight-theme-obsidian@0.2.2(@astrojs/starlight@0.32.4(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)))(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))(starlight-site-graph@0.3.0(@astrojs/starlight@0.32.4(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)))(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))):
     dependencies:
       '@astrojs/starlight': 0.32.4(astro@5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0))
       astro: 5.5.2(jiti@1.21.7)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)

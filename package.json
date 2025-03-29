@@ -42,7 +42,7 @@
 		"starlight-sidebar-topics": "^0.5.1",
 		"starlight-site-graph": "^0.3.0",
 		"starlight-theme-black": "^0.3.0",
-		"starlight-theme-obsidian": "^0.2.0",
+		"starlight-theme-obsidian": "^0.2.2",
 		"svelte": "^5.23.0",
 		"svelte-radix": "^2.0.1",
 		"tailwind-merge": "^3.0.2",

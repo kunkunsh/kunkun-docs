@@ -1,0 +1,195 @@
+{
+  "main": {
+    "id": "446c515701c454d7",
+    "type": "split",
+    "children": [
+      {
+        "id": "666fc2469760562a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3399f82088cd3fd0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "src/content/docs/blog/Tauri + drizzle proxy.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Tauri + drizzle proxy"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "7370ff5d3d4b93c9",
+    "type": "split",
+    "children": [
+      {
+        "id": "9ec50b0a0b50638d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "767a5a7ddcb88a23",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "5ab171d4cb0fcead",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "704519b718759227",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "3ae7f9cf60a5835e",
+    "type": "split",
+    "children": [
+      {
+        "id": "ac082885943ce4ba",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f97b90204fa68c23",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Excalidraw/extension-architecture.excalidraw.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for extension-architecture.excalidraw"
+            }
+          },
+          {
+            "id": "7ef62b5f84bbb4f8",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Excalidraw/extension-architecture.excalidraw.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from extension-architecture.excalidraw"
+            }
+          },
+          {
+            "id": "fff5483a73414743",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "d5006a446825242b",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Excalidraw/extension-architecture.excalidraw.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of extension-architecture.excalidraw"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "obsidian-excalidraw-plugin:New drawing": false
+    }
+  },
+  "active": "3399f82088cd3fd0",
+  "lastOpenFiles": [
+    "Excalidraw/kkrpc-js-runtime.md",
+    "src/content/docs/blog/Untitled.md",
+    "Excalidraw/extension-architecture.excalidraw.md",
+    "src/content/docs/blog/Tauri + drizzle proxy.md",
+    "src/content/docs/blog/neohtop-convert.mdx",
+    "src/content/docs/blog/space-lens.mdx",
+    "Excalidraw/drizzle-proxy.md",
+    "Excalidraw/neohtop-convert.md",
+    "Excalidraw/images/Pasted Image 20250116164718_547.png",
+    "Excalidraw/images/Pasted Image 20250116164059_666.png",
+    "Excalidraw/images/Pasted Image 20250115090226_971.png",
+    "Excalidraw/images/Pasted Image 20250115082709_849.png",
+    "Excalidraw/images/Pasted Image 20250115082209_742.png",
+    "Excalidraw/images/Pasted Image 20250115074722_694.png",
+    "Excalidraw/images/Pasted Image 20250115074013_322.png",
+    "Excalidraw/images/Pasted Image 20250115070916_152.png",
+    "Excalidraw/images/Pasted Image 20250115064614_554.png",
+    "Excalidraw/images/Pasted Image 20250115064500_215.png",
+    "Excalidraw/kkrpc.md",
+    "Excalidraw/neohtop.md"
+  ]
+}
