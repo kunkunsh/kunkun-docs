@@ -14,11 +14,13 @@ import vue from "@astrojs/vue";
 import starlightSiteGraph from "starlight-site-graph";
 import starlightThemeObsidian from "starlight-theme-obsidian";
 import starlightGiscus from "starlight-giscus";
+import starlightLlmsTxt from "starlight-llms-txt";
 
 const googleAnalyticsId = "G-0CV6E8FN6E";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://docs.kunkun.sh",
   integrations: [
     starlight({
       editLink: {
@@ -85,6 +87,7 @@ export default defineConfig({
             },
           },
         }),
+        starlightLlmsTxt(),
         // starlightThemeObsidian({
         //   debug: false,
         //   graph: true,
