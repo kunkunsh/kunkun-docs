@@ -87,7 +87,9 @@ export default defineConfig({
             },
           },
         }),
-        starlightLlmsTxt(),
+        starlightLlmsTxt({
+          rawContent: true,
+        }),
         // starlightThemeObsidian({
         //   debug: false,
         //   graph: true,
