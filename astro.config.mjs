@@ -47,6 +47,9 @@ export default defineConfig({
           categoryId: "DIC_kwDONmzGvs4CoXec",
         }),
         starlightSiteGraph({
+          sitemapConfig: {
+            ignoreStarlightLinks: false,
+          },
           graphConfig: {
             depth: 1,
             scale: 1,
